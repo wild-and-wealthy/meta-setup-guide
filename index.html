@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connecting Claude to Meta — Wild &amp; Wealthy Team Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #651D32;
+      --navy: #0A2541;
+      --green: #36482F;
+      --yellow: #F2C75C;
+      --cream: #F5EED7;
+
+      --text: #0A2541;
+      --muted: #5a6a7a;
+      --border: #e2d9c5;
+      --bg-soft: #F5EED7;
+      --bg-code: #eee8d5;
+      --accent-light: #fdf5f7;
+      --max-width: 740px;
+    }
+
+    body {
+      font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: #fff;
+      padding: 0 24px;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      background: var(--navy);
+      margin: 0 -24px;
+      padding: 12px 32px;
+    }
+    .top-bar span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    /* ── Header ── */
+    header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    header .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta-item strong { color: var(--text); }
+
+    /* ── Prereq banner ── */
+    .prereq {
+      max-width: var(--max-width);
+      margin: 32px auto 0;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .prereq strong { color: var(--navy); }
+
+    /* ── Nav ── */
+    nav {
+      max-width: var(--max-width);
+      margin: 32px auto 0;
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 24px 28px;
+    }
+    nav h2 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 14px;
+    }
+    nav ol { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    nav ol li { display: flex; align-items: baseline; gap: 12px; }
+    nav ol li .num { font-size: 11px; font-weight: 700; color: var(--yellow); min-width: 22px; }
+    nav ol li a { font-size: 14px; font-weight: 300; color: #fff; text-decoration: none; }
+    nav ol li a:hover { color: var(--yellow); }
+    nav .bonus-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(242,199,92,0.6);
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    /* ── Main ── */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    /* ── Sections ── */
+    .section { margin-top: 64px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 8px;
+    }
+
+    .section h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .section p { margin-bottom: 14px; color: #2d3d50; }
+
+    .step-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-top: 32px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Checklist ── */
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .checklist li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      color: #2d3d50;
+    }
+    .checklist li::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      margin-top: 3px;
+    }
+
+    /* ── Ordered steps ── */
+    .steps {
+      padding-left: 20px;
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 15px;
+      color: #2d3d50;
+      line-height: 1.6;
+    }
+
+    /* ── Code ── */
+    code {
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      font-size: 13px;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--navy);
+    }
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+    pre code { background: none; padding: 0; font-size: 13px; line-height: 1.6; }
+
+    /* ── URL pill ── */
+    .url-pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--burgundy);
+      text-decoration: none;
+      margin: 10px 0;
+      word-break: break-all;
+    }
+
+    /* ── Callouts ── */
+    .callout {
+      border-left: 3px solid var(--burgundy);
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #2d3d50;
+    }
+    .callout.tip {
+      border-color: var(--green);
+      background: #edf2ec;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    /* ── Success ── */
+    .success {
+      background: #edf2ec;
+      border: 1px solid #c5d4c3;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+    }
+    .success .title { font-weight: 700; color: var(--green); margin-bottom: 4px; }
+
+    /* ── Prop table ── */
+    .prop-table {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+    .prop-table .row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .prop-table .row:last-child { border-bottom: none; }
+    .prop-table .key {
+      background: var(--bg-soft);
+      padding: 12px 14px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--navy);
+      border-right: 1px solid var(--border);
+    }
+    .prop-table .val {
+      padding: 12px 14px;
+      color: #2d3d50;
+    }
+
+    /* ── Troubleshoot table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-soft); }
+
+    /* ── Bonus section ── */
+    .bonus-section {
+      margin-top: 64px;
+      border-top: 2px dashed var(--border);
+      padding-top: 48px;
+    }
+    .bonus-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── Links ── */
+    a { color: var(--burgundy); }
+    a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 0 64px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+
+    @media (max-width: 600px) {
+      header { padding: 40px 0 32px; }
+      .section { margin-top: 48px; }
+      .prop-table .row { grid-template-columns: 1fr; }
+      .prop-table .key { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — Team Resources</span>
+</div>
+
+<header>
+  <p class="eyebrow">Setup Guide</p>
+  <h1>Connecting Claude to Meta</h1>
+  <p class="subtitle">How to give Claude access to your Meta ad account so it can read your data, pull your numbers, and do the work for you.</p>
+  <div class="meta-row">
+    <span class="meta-item"><strong>Time:</strong> 10–15 minutes</span>
+    <span class="meta-item"><strong>Prerequisite:</strong> Marina's Claude Foundation Guide</span>
+    <span class="meta-item"><strong>Done once,</strong> lasts 60 days</span>
+  </div>
+</header>
+
+<div class="prereq">
+  <strong>Before you start:</strong> Complete <a href="https://marinasoicher.github.io/claude-foundation-guide/" target="_blank">Marina's Claude Foundation Guide</a> first — sections 01 through 08. This guide assumes Claude Code is installed and your foundation files are set up.
+</div>
+
+<nav>
+  <h2>In this guide</h2>
+  <ol>
+    <li><span class="num">01</span><a href="#what">What this actually does</a></li>
+    <li><span class="num">02</span><a href="#account">Set up your Meta developer account</a></li>
+    <li><span class="num">03</span><a href="#app">Access the team app</a></li>
+    <li><span class="num">04</span><a href="#token">Generate your access token</a></li>
+    <li><span class="num">05</span><a href="#store">Store it securely in Claude</a></li>
+    <li><span class="num">06</span><a href="#test">Test the connection</a></li>
+    <li><span class="num">07</span><a href="#refresh">Refreshing your token (every 60 days)</a></li>
+    <li><span class="num">08</span><a href="#troubleshooting">Troubleshooting</a></li>
+  </ol>
+  <p class="bonus-label">Bonus</p>
+  <ol>
+    <li><span class="num">+</span><a href="#sheets">Auto-fill your KPI Google Sheet</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <!-- 01 WHAT THIS DOES -->
+  <section class="section" id="what">
+    <p class="section-label">01 /</p>
+    <h2>What This Actually Does</h2>
+    <p>Meta keeps your ad data locked behind an API — a secure door that requires a key before anything can read it. That key is called an <strong>access token.</strong></p>
+    <p>Once you have your token and tell Claude where it lives, Claude can pull your spend, clicks, CTR, impressions, and more directly from Meta — no logging in, no screenshotting dashboards, no manual entry.</p>
+    <p>You generate the token once. It lasts about 60 days. Refreshing it when it expires takes 2 minutes.</p>
+  </section>
+
+  <!-- 02 META DEVELOPER ACCOUNT -->
+  <section class="section" id="account">
+    <p class="section-label">02 /</p>
+    <h2>Set Up Your Meta Developer Account</h2>
+    <p>This is free and uses your existing Facebook login. You only do this once.</p>
+
+    <span class="step-label">Step 1 — Go to Meta for Developers</span>
+    <p>Open this link in your browser:</p>
+    <a class="url-pill" href="https://developers.facebook.com" target="_blank">→ developers.facebook.com</a>
+    <p>Click <strong>Get Started</strong> in the top right. Log in with the Facebook account that has access to the team's Meta ad account.</p>
+
+    <span class="step-label">Step 2 — Complete the Developer Registration</span>
+    <p>Meta will ask you a few quick questions about how you plan to use the platform. Answer honestly — you're building tools to access your own ad data. Accept the terms and finish registration.</p>
+
+    <div class="callout tip">
+      <strong>✓ Already done this?</strong>
+      If you can see the Meta for Developers dashboard when you log in, skip ahead to Section 03.
+    </div>
+  </section>
+
+  <!-- 03 ACCESS THE APP -->
+  <section class="section" id="app">
+    <p class="section-label">03 /</p>
+    <h2>Access the Team App</h2>
+    <p>Meta requires an "app" to issue tokens. Natalie has already created one for the team — you don't need to build anything.</p>
+
+    <span class="step-label">Step 1 — Open the Graph API Explorer</span>
+    <p>This is the tool you'll use to generate your token. Open it here:</p>
+    <a class="url-pill" href="https://developers.facebook.com/tools/explorer/" target="_blank">→ developers.facebook.com/tools/explorer/</a>
+
+    <span class="step-label">Step 2 — Select the Team App</span>
+    <p>At the top of the page, find the dropdown labeled <strong>Meta App.</strong></p>
+    <p>Ask Natalie for the app name and select it from the list. If you don't see it, you may not be added to the right Business account — let Natalie know and she'll sort it.</p>
+
+    <div class="callout">
+      <strong>Don't see the app?</strong>
+      You need to be added to the Meta Business portfolio first. Message Natalie with the email address on your Facebook account and she'll add you.
+    </div>
+  </section>
+
+  <!-- 04 GENERATE TOKEN -->
+  <section class="section" id="token">
+    <p class="section-label">04 /</p>
+    <h2>Generate Your Access Token</h2>
+
+    <span class="step-label">Step 1 — Add the Right Permission</span>
+    <p>In the Graph API Explorer, look for a section called <strong>Permissions</strong> or a button that says <strong>Add a Permission.</strong></p>
+    <p>Search for and add: <code>ads_management</code></p>
+    <p>This is the only permission you need. It gives read access to ad account data — nothing else.</p>
+
+    <span class="step-label">Step 2 — Generate the Token</span>
+    <p>Click the blue <strong>Generate Access Token</strong> button.</p>
+    <p>A popup will appear asking you to log in and approve access. Click through everything — you're giving yourself permission to read your own ad data.</p>
+    <p>Your token will appear in the text box at the top of the page. It's a long string of characters starting with <code>EAG...</code></p>
+
+    <span class="step-label">Step 3 — Copy and Save It</span>
+    <p>Copy the full token and paste it somewhere safe right now — a private note, your password manager, or a note on your phone. You'll need it in the next step.</p>
+
+    <div class="callout">
+      <strong>⚠️ Keep this private</strong>
+      Your token gives read access to the ad account. Don't paste it into any group chat, email, or shared doc. If you think it was ever exposed, generate a new one immediately and let Natalie know.
+    </div>
+
+    <span class="step-label">Step 4 — Set a 55-Day Reminder</span>
+    <p>Tokens expire after about 60 days. Set a calendar reminder for 55 days from today. Label it <strong>"Refresh Meta Token."</strong> The refresh process is covered in Section 07 — it takes 2 minutes.</p>
+  </section>
+
+  <!-- 05 STORE IT -->
+  <section class="section" id="store">
+    <p class="section-label">05 /</p>
+    <h2>Store It Securely in Claude</h2>
+    <p>You never paste your token directly into Claude's chat — that would leave it exposed in your conversation history. Instead, you store it in a secure properties vault inside your Google Sheet's script. Claude reads it from there.</p>
+
+    <span class="step-label">Step 1 — Open Your Google Sheet's Script Editor</span>
+    <p>Open the team KPI Google Sheet (ask Natalie for the link if you don't have it).</p>
+    <p>In the top menu: <strong>Extensions → Apps Script</strong></p>
+    <p>A new tab opens. This is the secure backend of the sheet.</p>
+
+    <span class="step-label">Step 2 — Open Script Properties</span>
+    <p>In the left sidebar of the Apps Script editor, click the <strong>gear icon ⚙️</strong> labeled <em>Project Settings.</em></p>
+    <p>Scroll down to <strong>Script Properties</strong> and click <strong>Add Script Property.</strong></p>
+
+    <span class="step-label">Step 3 — Save Your Token</span>
+    <p>Fill in the two fields exactly like this:</p>
+    <div class="prop-table">
+      <div class="row">
+        <div class="key">Property name</div>
+        <div class="val"><code>META_TOKEN</code></div>
+      </div>
+      <div class="row">
+        <div class="key">Value</div>
+        <div class="val">Paste your token here</div>
+      </div>
+    </div>
+    <p>Click <strong>Save script properties.</strong></p>
+    <p>Your token is now encrypted and stored securely. The automation reads it from here automatically — you never type it anywhere else.</p>
+  </section>
+
+  <!-- 06 TEST -->
+  <section class="section" id="test">
+    <p class="section-label">06 /</p>
+    <h2>Test the Connection</h2>
+    <p>Let's confirm everything is working before you walk away.</p>
+
+    <span class="step-label">Step 1 — Run the Test</span>
+    <p>In the Apps Script editor, find the function dropdown at the top of the page. Select <code>testRun</code> and click the <strong>▶ Run</strong> button.</p>
+    <p>The first time you run anything, a permissions popup will appear. Click through:</p>
+    <ol class="steps">
+      <li>Review permissions</li>
+      <li>Select your Google account</li>
+      <li>Click Allow</li>
+    </ol>
+
+    <span class="step-label">Step 2 — Check the Execution Log</span>
+    <p>After it runs, look at the <strong>Execution Log</strong> panel at the bottom of the page. A successful connection looks like this:</p>
+    <pre><code>Fetching Meta metrics for: 5/20/2026
+Spend: $87.45 | Link Clicks: 312 | CTR: 4.2%
+Sheet updated successfully.</code></pre>
+
+    <div class="success">
+      <div class="title">✅ If you see that — you're connected.</div>
+      Meta is talking to Claude. Your token works. You're done with setup.
+    </div>
+
+    <div class="callout">
+      <strong>Seeing a token error?</strong>
+      Go back to Section 04 and make sure the full token was copied correctly — no spaces at the start or end, and nothing cut off.
+    </div>
+  </section>
+
+  <!-- 07 REFRESH -->
+  <section class="section" id="refresh">
+    <p class="section-label">07 /</p>
+    <h2>Refreshing Your Token Every 60 Days</h2>
+    <p>When your calendar reminder fires, here's the full refresh — 2 minutes start to finish.</p>
+
+    <ol class="steps">
+      <li>Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank">developers.facebook.com/tools/explorer/</a></li>
+      <li>Select the same team app</li>
+      <li>Confirm <code>ads_management</code> is still checked</li>
+      <li>Click <strong>Generate Access Token</strong> — approve the popup</li>
+      <li>Copy the new token</li>
+      <li>Open the Google Sheet → <strong>Extensions → Apps Script → ⚙️ Project Settings → Script Properties</strong></li>
+      <li>Click <code>META_TOKEN</code>, replace the value with the new token</li>
+      <li>Save</li>
+    </ol>
+
+    <p>The automation picks up the new token on its next run. Nothing else needed.</p>
+  </section>
+
+  <!-- 08 TROUBLESHOOTING -->
+  <section class="section" id="troubleshooting">
+    <p class="section-label">08 /</p>
+    <h2>Troubleshooting</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>What you see</th>
+          <th>What it means</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>META_TOKEN not set</code></td>
+          <td>Token wasn't saved correctly</td>
+          <td>Re-do Section 05 — make sure the property name is exactly <code>META_TOKEN</code></td>
+        </tr>
+        <tr>
+          <td><code>Meta API error: invalid token</code></td>
+          <td>Token expired or was copied incorrectly</td>
+          <td>Generate a new one (Section 07) or re-copy from Graph API Explorer</td>
+        </tr>
+        <tr>
+          <td><code>No permissions available</code></td>
+          <td>The <code>ads_management</code> permission wasn't added</td>
+          <td>Go back to the Graph API Explorer, add the permission, regenerate the token</td>
+        </tr>
+        <tr>
+          <td>Can't see the team app in the dropdown</td>
+          <td>You're not added to the Meta Business account</td>
+          <td>Message Natalie with your Facebook account email</td>
+        </tr>
+        <tr>
+          <td><code>No Meta data returned</code></td>
+          <td>No ad spend that day — normal if campaigns were paused</td>
+          <td>Check Ads Manager to confirm. Not an error.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 28px;">
+      <strong>Still stuck?</strong>
+      Drop a message in the team channel with a screenshot of the error from the Execution Log. Don't include your token — just the error text.
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- BONUS -->
+  <section class="section bonus-section" id="sheets">
+    <span class="bonus-badge">Bonus</span>
+    <p class="section-label">Once you're connected /</p>
+    <h2>Auto-Fill Your KPI Google Sheet</h2>
+    <p>Now that Claude can talk to Meta, you can take it one step further: set up a daily automation that pulls yesterday's ad data and writes it directly to the team's KPI sheet — every morning, automatically, before you open your laptop.</p>
+
+    <span class="step-label">Step 1 — Paste the Automation Script</span>
+    <p>Ask Natalie for the <code>meta_kpi_updater.gs</code> script file. In your Google Sheet:</p>
+    <ol class="steps">
+      <li>Extensions → Apps Script</li>
+      <li>Select all existing code and delete it</li>
+      <li>Paste the script Natalie gave you</li>
+      <li>Save (<code>Cmd+S</code> / <code>Ctrl+S</code>)</li>
+    </ol>
+
+    <span class="step-label">Step 2 — Run the Daily Trigger Setup</span>
+    <p>In the function dropdown, select <code>setupDailyTrigger</code> and click <strong>▶ Run.</strong></p>
+    <p>That's it. Every morning at 6am ET, the script wakes up, pulls the previous day's Meta data, and writes it to the matching date row in your sheet.</p>
+
+    <div class="success">
+      <div class="title">What gets written automatically every morning</div>
+      Campaign Spend, Link Clicks, CTR, Impressions, CPM, Clicks (All), CTR (All), CTR (Link), Unique Clicks — all from Meta, all without you touching a thing.
+    </div>
+
+    <p>The only columns you fill in manually are the ones that come from your own knowledge: Booked Calls, Attended, Closed, and Commission.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Wild &amp; Wealthy team resource &nbsp;·&nbsp; Built on top of <a href="https://marinasoicher.github.io/claude-foundation-guide/" target="_blank">Marina Soicher's Claude Foundation Guide</a></p>
+</footer>
+
+</body>
+</html>
