@@ -390,7 +390,7 @@
   <div class="meta-row">
     <span class="meta-item"><strong>Time:</strong> 10–15 minutes</span>
     <span class="meta-item"><strong>Prerequisite:</strong> Marina's Claude Foundation Guide</span>
-    <span class="meta-item"><strong>Done once,</strong> lasts 60 days</span>
+    <span class="meta-item"><strong>Done once,</strong> token never expires</span>
   </div>
 </header>
 
@@ -407,7 +407,7 @@
     <li><span class="num">04</span><a href="#token">Generate your access token</a></li>
     <li><span class="num">05</span><a href="#store">Store it securely in Doppler</a></li>
     <li><span class="num">06</span><a href="#test">Test the connection</a></li>
-    <li><span class="num">07</span><a href="#refresh">Refreshing your token (every 60 days)</a></li>
+    <li><span class="num">07</span><a href="#refresh">If your token ever breaks</a></li>
     <li><span class="num">08</span><a href="#troubleshooting">Troubleshooting</a></li>
   </ol>
   <p class="bonus-label">Bonus</p>
@@ -483,21 +483,27 @@
     <p>Search for and add: <code>ads_management</code></p>
     <p>This is the only permission you need. It gives read access to ad account data — nothing else.</p>
 
-    <span class="step-label">Step 2 — Generate the Token</span>
+    <span class="step-label">Step 2 — Set Expiration to Never</span>
+    <p>Before generating, find the <strong>Token Expiration</strong> dropdown (it defaults to 60 days). Change it to <strong>Never.</strong></p>
+    <p>This means you generate your token once and never have to repeat this process.</p>
+
+    <div class="callout tip">
+      <strong>✓ Don't skip this step.</strong>
+      The default is 60 days, which means your connection would silently break two months from now. Setting it to Never means it works until you intentionally revoke it.
+    </div>
+
+    <span class="step-label">Step 3 — Generate the Token</span>
     <p>Click the blue <strong>Generate Access Token</strong> button.</p>
     <p>A popup will appear asking you to log in and approve access. Click through everything — you're giving yourself permission to read your own ad data.</p>
-    <p>Your token will appear in the text box at the top of the page. It's a long string of characters starting with <code>EAG...</code></p>
+    <p>Your token will appear in the text box at the top of the page. It's a long string starting with <code>EAG...</code></p>
 
-    <span class="step-label">Step 3 — Copy and Save It</span>
-    <p>Copy the full token and paste it somewhere safe right now — a private note, your password manager, or a note on your phone. You'll need it in the next step.</p>
+    <span class="step-label">Step 4 — Copy and Save It</span>
+    <p>Copy the full token and paste it somewhere safe — a private note, your password manager, or anywhere only you can see it. You'll need it in the next step, and won't see it again after leaving this page.</p>
 
     <div class="callout">
       <strong>⚠️ Keep this private</strong>
-      Your token gives read access to the ad account. Don't paste it into any group chat, email, or shared doc. If you think it was ever exposed, generate a new one immediately and let Natalie know.
+      Your token gives read access to the ad account. Don't paste it into any group chat, email, or shared doc. If you think it was ever exposed, generate a new one (Section 07) and update Doppler immediately.
     </div>
-
-    <span class="step-label">Step 4 — Set a 55-Day Reminder</span>
-    <p>Tokens expire after about 60 days. Set a calendar reminder for 55 days from today. Label it <strong>"Refresh Meta Token."</strong> The refresh process is covered in Section 07 — it takes 2 minutes.</p>
   </section>
 
   <!-- 05 STORE IT -->
@@ -581,23 +587,29 @@ Sheet updated successfully.</code></pre>
     </div>
   </section>
 
-  <!-- 07 REFRESH -->
+  <!-- 07 IF TOKEN BREAKS -->
   <section class="section" id="refresh">
     <p class="section-label">07 /</p>
-    <h2>Refreshing Your Token Every 60 Days</h2>
-    <p>When your calendar reminder fires, here's the full refresh — 2 minutes start to finish.</p>
+    <h2>If Your Token Ever Breaks</h2>
+    <p>Since you set expiration to Never, your token won't expire on its own. The only reasons you'd need a new one: you accidentally shared it, Meta revoked it, or something got corrupted. Here's how to replace it in under 2 minutes.</p>
 
     <ol class="steps">
       <li>Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank">developers.facebook.com/tools/explorer/</a></li>
       <li>Select your app from the dropdown</li>
       <li>Confirm <code>ads_management</code> is still checked</li>
+      <li>Change expiration to <strong>Never</strong> again</li>
       <li>Click <strong>Generate Access Token</strong> — approve the popup</li>
       <li>Copy the new token</li>
       <li>In Terminal, run: <code>doppler secrets set META_TOKEN</code></li>
-      <li>Paste the new token when prompted and press Enter</li>
+      <li>Paste the new token when prompted, press Enter</li>
     </ol>
 
-    <p>The next time Claude runs a script via <code>doppler run --</code>, it picks up the new token automatically. Nothing else needed.</p>
+    <p>Claude picks up the new token automatically on its next run. No other changes needed.</p>
+
+    <div class="callout tip">
+      <strong>No 60-day reminders needed.</strong>
+      If Claude stops returning Meta data and you're seeing a token error, this section is your fix. Otherwise, you should never need to come back here.
+    </div>
   </section>
 
   <!-- 08 TROUBLESHOOTING -->
@@ -621,8 +633,8 @@ Sheet updated successfully.</code></pre>
         </tr>
         <tr>
           <td><code>Meta API error: invalid token</code></td>
-          <td>Token expired or was copied incorrectly</td>
-          <td>Generate a new one (Section 07) and update Doppler: <code>doppler secrets set META_TOKEN</code></td>
+          <td>Token was revoked, shared, or copied with an error</td>
+          <td>Generate a new one following Section 07 — make sure expiration is set to Never — then update Doppler: <code>doppler secrets set META_TOKEN</code></td>
         </tr>
         <tr>
           <td><code>No permissions available</code></td>
