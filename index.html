@@ -386,7 +386,7 @@
 <header>
   <p class="eyebrow">Setup Guide</p>
   <h1>Connecting Claude to Meta</h1>
-  <p class="subtitle">How to give Claude access to your Meta ad account so it can read your data, pull your numbers, and do the work for you.</p>
+  <p class="subtitle">How to give Claude secure access to your own Meta ad account — using your own app and Doppler for key storage.</p>
   <div class="meta-row">
     <span class="meta-item"><strong>Time:</strong> 10–15 minutes</span>
     <span class="meta-item"><strong>Prerequisite:</strong> Marina's Claude Foundation Guide</span>
@@ -403,9 +403,9 @@
   <ol>
     <li><span class="num">01</span><a href="#what">What this actually does</a></li>
     <li><span class="num">02</span><a href="#account">Set up your Meta developer account</a></li>
-    <li><span class="num">03</span><a href="#app">Access the team app</a></li>
+    <li><span class="num">03</span><a href="#app">Create your own Meta app</a></li>
     <li><span class="num">04</span><a href="#token">Generate your access token</a></li>
-    <li><span class="num">05</span><a href="#store">Store it securely in Claude</a></li>
+    <li><span class="num">05</span><a href="#store">Store it securely in Doppler</a></li>
     <li><span class="num">06</span><a href="#test">Test the connection</a></li>
     <li><span class="num">07</span><a href="#refresh">Refreshing your token (every 60 days)</a></li>
     <li><span class="num">08</span><a href="#troubleshooting">Troubleshooting</a></li>
@@ -450,20 +450,26 @@
   <!-- 03 ACCESS THE APP -->
   <section class="section" id="app">
     <p class="section-label">03 /</p>
-    <h2>Access the Team App</h2>
-    <p>Meta requires an "app" to issue tokens. Natalie has already created one for the team — you don't need to build anything.</p>
+    <h2>Create Your Own Meta App</h2>
+    <p>Meta requires an "app" to issue tokens. <strong>You'll create your own — it's free, takes 3 minutes, and never needs to be touched again.</strong> Each person on the team has their own app. This keeps your token yours and avoids any account entanglement.</p>
 
     <span class="step-label">Step 1 — Open the Graph API Explorer</span>
-    <p>This is the tool you'll use to generate your token. Open it here:</p>
+    <p>This is the tool you'll use to create the app and generate your token. Open it here:</p>
     <a class="url-pill" href="https://developers.facebook.com/tools/explorer/" target="_blank">→ developers.facebook.com/tools/explorer/</a>
 
-    <span class="step-label">Step 2 — Select the Team App</span>
-    <p>At the top of the page, find the dropdown labeled <strong>Meta App.</strong></p>
-    <p>Ask Natalie for the app name and select it from the list. If you don't see it, you may not be added to the right Business account — let Natalie know and she'll sort it.</p>
+    <span class="step-label">Step 2 — Create a New App</span>
+    <p>At the top of the page, find the dropdown labeled <strong>Meta App.</strong> Click it and choose <strong>Create new app.</strong></p>
+    <ol class="steps">
+      <li>When asked for a use case, select <strong>Other</strong></li>
+      <li>For app type, choose <strong>Business</strong></li>
+      <li>Name it something like <code>YourName Meta KPI</code> (e.g. <code>Kim Meta KPI</code>)</li>
+      <li>Click through the remaining prompts — defaults are fine</li>
+    </ol>
+    <p>Once created, select your new app from the Meta App dropdown at the top of the Explorer.</p>
 
-    <div class="callout">
-      <strong>Don't see the app?</strong>
-      You need to be added to the Meta Business portfolio first. Message Natalie with the email address on your Facebook account and she'll add you.
+    <div class="callout tip">
+      <strong>✓ You own this app.</strong>
+      You're not joining anyone else's account. Your token is yours. If something breaks, you fix it independently — no waiting on anyone.
     </div>
   </section>
 
@@ -497,32 +503,50 @@
   <!-- 05 STORE IT -->
   <section class="section" id="store">
     <p class="section-label">05 /</p>
-    <h2>Store It Securely in Claude</h2>
-    <p>You never paste your token directly into Claude's chat — that would leave it exposed in your conversation history. Instead, you store it in a secure properties vault inside your Google Sheet's script. Claude reads it from there.</p>
+    <h2>Store It Securely in Doppler</h2>
+    <p>You never paste your token directly into Claude's chat — that would leave it exposed in your conversation history. Instead, you store it in <strong>Doppler</strong> — a secrets manager that keeps credentials encrypted and out of your code. Claude reads from Doppler automatically when it runs any scripts.</p>
 
-    <span class="step-label">Step 1 — Open Your Google Sheet's Script Editor</span>
-    <p>Open the team KPI Google Sheet (ask Natalie for the link if you don't have it).</p>
-    <p>In the top menu: <strong>Extensions → Apps Script</strong></p>
-    <p>A new tab opens. This is the secure backend of the sheet.</p>
+    <span class="step-label">Step 1 — Install Doppler</span>
+    <p>Open your Terminal and run:</p>
+    <pre><code>brew install dopplerhq/cli/doppler</code></pre>
+    <p>If you don't have Homebrew, install it first at <a href="https://brew.sh" target="_blank">brew.sh</a> — one command, takes 2 minutes.</p>
 
-    <span class="step-label">Step 2 — Open Script Properties</span>
-    <p>In the left sidebar of the Apps Script editor, click the <strong>gear icon ⚙️</strong> labeled <em>Project Settings.</em></p>
-    <p>Scroll down to <strong>Script Properties</strong> and click <strong>Add Script Property.</strong></p>
+    <span class="step-label">Step 2 — Create a Free Doppler Account</span>
+    <p>Go to <a href="https://doppler.com" target="_blank">doppler.com</a> and sign up for free. Use the same email as your work accounts.</p>
 
-    <span class="step-label">Step 3 — Save Your Token</span>
-    <p>Fill in the two fields exactly like this:</p>
+    <span class="step-label">Step 3 — Log In from Terminal</span>
+    <pre><code>doppler login</code></pre>
+    <p>This opens your browser and links your Terminal to your Doppler account.</p>
+
+    <span class="step-label">Step 4 — Ask Natalie for the Project Invite</span>
+    <p>Natalie has a Doppler project set up for the team. She'll send you an invite link by email. Click it to join the project — you'll see it in your Doppler dashboard as <strong>wild-wealthy-kpi</strong> (or similar).</p>
+
+    <span class="step-label">Step 5 — Connect the Project in Terminal</span>
+    <p>Navigate to your Claude working folder and run:</p>
+    <pre><code>doppler setup</code></pre>
+    <p>Choose the team project when prompted. This links your local environment to the right Doppler project.</p>
+
+    <span class="step-label">Step 6 — Save Your Token</span>
+    <pre><code>doppler secrets set META_TOKEN</code></pre>
+    <p>Doppler will prompt you to enter the value. Paste your token and press Enter. That's it — it's encrypted and stored. You never type it anywhere else.</p>
+
     <div class="prop-table">
       <div class="row">
-        <div class="key">Property name</div>
+        <div class="key">Secret name</div>
         <div class="val"><code>META_TOKEN</code></div>
       </div>
       <div class="row">
         <div class="key">Value</div>
-        <div class="val">Paste your token here</div>
+        <div class="val">Your <code>EAG...</code> token from Section 04</div>
       </div>
     </div>
-    <p>Click <strong>Save script properties.</strong></p>
-    <p>Your token is now encrypted and stored securely. The automation reads it from here automatically — you never type it anywhere else.</p>
+
+    <div class="callout tip">
+      <strong>✓ How it works with Claude</strong>
+      When you run Claude Code scripts, prefix the command with <code>doppler run --</code> so secrets are injected automatically:
+      <pre style="margin-top:10px;"><code>doppler run -- claude</code></pre>
+      Claude can then read <code>META_TOKEN</code> as an environment variable — no hardcoding, no chat exposure.
+    </div>
   </section>
 
   <!-- 06 TEST -->
@@ -565,16 +589,15 @@ Sheet updated successfully.</code></pre>
 
     <ol class="steps">
       <li>Go to <a href="https://developers.facebook.com/tools/explorer/" target="_blank">developers.facebook.com/tools/explorer/</a></li>
-      <li>Select the same team app</li>
+      <li>Select your app from the dropdown</li>
       <li>Confirm <code>ads_management</code> is still checked</li>
       <li>Click <strong>Generate Access Token</strong> — approve the popup</li>
       <li>Copy the new token</li>
-      <li>Open the Google Sheet → <strong>Extensions → Apps Script → ⚙️ Project Settings → Script Properties</strong></li>
-      <li>Click <code>META_TOKEN</code>, replace the value with the new token</li>
-      <li>Save</li>
+      <li>In Terminal, run: <code>doppler secrets set META_TOKEN</code></li>
+      <li>Paste the new token when prompted and press Enter</li>
     </ol>
 
-    <p>The automation picks up the new token on its next run. Nothing else needed.</p>
+    <p>The next time Claude runs a script via <code>doppler run --</code>, it picks up the new token automatically. Nothing else needed.</p>
   </section>
 
   <!-- 08 TROUBLESHOOTING -->
@@ -592,29 +615,34 @@ Sheet updated successfully.</code></pre>
       </thead>
       <tbody>
         <tr>
-          <td><code>META_TOKEN not set</code></td>
-          <td>Token wasn't saved correctly</td>
-          <td>Re-do Section 05 — make sure the property name is exactly <code>META_TOKEN</code></td>
+          <td><code>META_TOKEN not set</code> or blank</td>
+          <td>Doppler isn't injecting the secret — usually means <code>doppler run --</code> wasn't used</td>
+          <td>Make sure you're running Claude scripts as <code>doppler run -- claude</code>, and that <code>doppler setup</code> has been run in your working folder</td>
         </tr>
         <tr>
           <td><code>Meta API error: invalid token</code></td>
           <td>Token expired or was copied incorrectly</td>
-          <td>Generate a new one (Section 07) or re-copy from Graph API Explorer</td>
+          <td>Generate a new one (Section 07) and update Doppler: <code>doppler secrets set META_TOKEN</code></td>
         </tr>
         <tr>
           <td><code>No permissions available</code></td>
-          <td>The <code>ads_management</code> permission wasn't added</td>
+          <td>The <code>ads_management</code> permission wasn't added to your app</td>
           <td>Go back to the Graph API Explorer, add the permission, regenerate the token</td>
         </tr>
         <tr>
-          <td>Can't see the team app in the dropdown</td>
-          <td>You're not added to the Meta Business account</td>
-          <td>Message Natalie with your Facebook account email</td>
+          <td>Can't find your app in the dropdown</td>
+          <td>App wasn't created under the right Facebook account</td>
+          <td>Make sure you're logged into Facebook as the account with ad account access, then create the app again</td>
         </tr>
         <tr>
           <td><code>No Meta data returned</code></td>
           <td>No ad spend that day — normal if campaigns were paused</td>
           <td>Check Ads Manager to confirm. Not an error.</td>
+        </tr>
+        <tr>
+          <td><code>doppler: command not found</code></td>
+          <td>Doppler CLI isn't installed</td>
+          <td>Run <code>brew install dopplerhq/cli/doppler</code> and then <code>doppler login</code></td>
         </tr>
       </tbody>
     </table>
