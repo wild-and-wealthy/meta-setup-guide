@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Ad Setup Guide — Wild &amp; Wealthy Team Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #651D32;
+      --navy: #0A2541;
+      --green: #36482F;
+      --yellow: #F2C75C;
+      --cream: #F5EED7;
+
+      --text: #0A2541;
+      --muted: #5a6a7a;
+      --border: #e2d9c5;
+      --bg-soft: #F5EED7;
+      --bg-code: #eee8d5;
+      --accent-light: #fdf5f7;
+      --max-width: 740px;
+    }
+
+    body {
+      font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: #fff;
+      padding: 0 24px;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      background: var(--navy);
+      margin: 0 -24px;
+      padding: 12px 32px;
+    }
+    .top-bar span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    /* ── Header ── */
+    header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    header .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta-item strong { color: var(--text); }
+
+    /* ── Prereq banner ── */
+    .prereq {
+      max-width: var(--max-width);
+      margin: 32px auto 0;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .prereq strong { color: var(--navy); }
+
+    /* ── Nav ── */
+    nav {
+      max-width: var(--max-width);
+      margin: 32px auto 0;
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 24px 28px;
+    }
+    nav h2 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 14px;
+    }
+    nav ol { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    nav ol li { display: flex; align-items: baseline; gap: 12px; }
+    nav ol li .num { font-size: 11px; font-weight: 700; color: var(--yellow); min-width: 22px; }
+    nav ol li a { font-size: 14px; font-weight: 300; color: #fff; text-decoration: none; }
+    nav ol li a:hover { color: var(--yellow); }
+
+    /* ── Main ── */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    /* ── Sections ── */
+    .section { margin-top: 64px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 8px;
+    }
+
+    .section h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .section p { margin-bottom: 14px; color: #2d3d50; }
+
+    .step-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-top: 32px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Ordered steps ── */
+    .steps {
+      padding-left: 20px;
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 15px;
+      color: #2d3d50;
+      line-height: 1.6;
+    }
+
+    /* ── Code ── */
+    code {
+      font-family: 'SF Mono', 'Fira Code', Menlo, monospace;
+      font-size: 13px;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--navy);
+    }
+
+    /* ── URL pill ── */
+    .url-pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 13px;
+      color: var(--burgundy);
+      text-decoration: none;
+      margin: 10px 0;
+      word-break: break-all;
+    }
+
+    /* ── Callouts ── */
+    .callout {
+      border-left: 3px solid var(--burgundy);
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #2d3d50;
+    }
+    .callout.tip {
+      border-color: var(--green);
+      background: #edf2ec;
+    }
+    .callout.warning {
+      border-color: #b07d1a;
+      background: #fdf8ec;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+
+    /* ── Success ── */
+    .success {
+      background: #edf2ec;
+      border: 1px solid #c5d4c3;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+    }
+    .success .title { font-weight: 700; color: var(--green); margin-bottom: 4px; }
+
+    /* ── Comparison table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-soft); }
+    .yes { color: #27ae60; font-weight: 700; }
+    .no  { color: #c0392b; }
+    .no-detail { color: #c0392b; }
+
+    /* ── Divider ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── Links ── */
+    a { color: var(--burgundy); }
+    a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 32px 0 64px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+
+    @media (max-width: 600px) {
+      header { padding: 40px 0 32px; }
+      .section { margin-top: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — Team Resources</span>
+</div>
+
+<header>
+  <p class="eyebrow">Setup Guide</p>
+  <h1>Message Ad Setup Guide</h1>
+  <p class="subtitle">How to automatically send your opt-in link the moment someone messages your ad — no manual follow-up needed.</p>
+  <div class="meta-row">
+    <span class="meta-item"><strong>Time:</strong> 5–10 minutes</span>
+    <span class="meta-item"><strong>Two options:</strong> ManyChat (recommended) or Meta Native</span>
+    <span class="meta-item"><strong>Done once</strong> per ad</span>
+  </div>
+</header>
+
+<div class="prereq">
+  <strong>Before you start:</strong> Make sure your message ad is already created and active in Meta Ads Manager. This guide covers automation only — not how to build the ad itself.
+</div>
+
+<nav>
+  <h2>In this guide</h2>
+  <ol>
+    <li><span class="num">01</span><a href="#why">Why your current setup isn't firing</a></li>
+    <li><span class="num">02</span><a href="#option1">Option 1 — ManyChat (recommended)</a></li>
+    <li><span class="num">03</span><a href="#troubleshooting">Troubleshooting ManyChat</a></li>
+    <li><span class="num">04</span><a href="#option2">Option 2 — Meta Native Instant Reply</a></li>
+    <li><span class="num">05</span><a href="#compare">Which option should you use?</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <!-- 01 WHY IT'S NOT FIRING -->
+  <section class="section" id="why">
+    <p class="section-label">01 /</p>
+    <h2>Why Your Current Setup Isn't Firing</h2>
+    <p>If you set up ManyChat to respond when someone types the word <strong>"ready"</strong> — that's the issue. Keyword triggers are unreliable for message ads.</p>
+    <p>Here's why: when someone clicks a message ad, Meta doesn't send a free-form message. It sends a system-generated opener — a pre-populated prompt or "Get Started" tap — that ManyChat doesn't recognize as your keyword. So the automation never fires, and the lead gets nothing.</p>
+    <p>The fix is simple: switch from a keyword trigger to ManyChat's <strong>Ads Entry Point trigger</strong>. It fires the moment someone opens a conversation from your ad — no keyword required, no drop-off.</p>
+
+    <div class="callout">
+      <strong>The short version</strong>
+      Keyword triggers = broken for message ads. Ads Entry Point trigger = works every time.
+    </div>
+  </section>
+
+  <!-- 02 OPTION 1: MANYCHAT -->
+  <section class="section" id="option1">
+    <p class="section-label">02 /</p>
+    <h2>Option 1 — ManyChat (Recommended)</h2>
+    <p>This is the right long-term setup. Once connected to your ad, ManyChat delivers the link instantly and lets you build follow-up sequences, tag leads, and automate the full conversation — all hands-free.</p>
+
+    <span class="step-label">Step 1 — Log into ManyChat</span>
+    <p>Go to:</p>
+    <a class="url-pill" href="https://app.manychat.com" target="_blank">→ app.manychat.com</a>
+    <p>Log in to your account and make sure you're connected to the correct Facebook Page.</p>
+
+    <span class="step-label">Step 2 — Create a New Flow</span>
+    <p>In the left sidebar, click <strong>Automation</strong>, then click <strong>+ New Flow.</strong></p>
+    <p>Give it a clear name so you can find it later — something like <code>Ad — Opt-In Link Delivery</code>.</p>
+
+    <span class="step-label">Step 3 — Set the Trigger</span>
+    <ol class="steps">
+      <li>Click <strong>+ Add Trigger</strong> at the top of the flow</li>
+      <li>Search for and select <strong>"Facebook Ads JSON"</strong> — it may also appear as <strong>"Ads Entry Point"</strong> depending on your ManyChat version</li>
+      <li>Click <strong>Connect Ad</strong> and select the specific ad you want this flow to fire from</li>
+      <li>Save the trigger</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>✓ Connect the ad, not the campaign</strong>
+      Make sure you select the individual ad — not the campaign or ad set. The trigger must be tied to the exact ad for it to fire correctly.
+    </div>
+
+    <span class="step-label">Step 4 — Build the First Message</span>
+    <ol class="steps">
+      <li>Click the first message block in the flow</li>
+      <li>Write a short, warm message with your link — example: <em>"Hey! Here's your link to get started → [YOUR OPT-IN PAGE LINK]"</em></li>
+      <li>Keep it one or two lines — the goal is speed, not length</li>
+    </ol>
+
+    <span class="step-label">Step 5 — Publish the Flow</span>
+    <ol class="steps">
+      <li>Click <strong>Publish</strong> in the top right corner</li>
+      <li>Test it: click your ad from a <em>personal</em> account (not your business account) and confirm the link arrives automatically</li>
+    </ol>
+
+    <div class="success">
+      <div class="title">✅ If the link arrives instantly — you're set.</div>
+      Your leads will now receive the opt-in link the moment they tap to message, with zero manual action on your end.
+    </div>
+  </section>
+
+  <!-- 03 TROUBLESHOOTING -->
+  <section class="section" id="troubleshooting">
+    <p class="section-label">03 /</p>
+    <h2>Troubleshooting ManyChat</h2>
+    <p>If you've followed the steps and the flow still isn't firing, work through this list before assuming something is broken on Meta's end.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>What's happening</th>
+          <th>Most likely cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Flow doesn't fire at all</td>
+          <td>Flow is saved as a draft, not published</td>
+          <td>Open the flow and click <strong>Publish</strong> in the top right — draft mode means it's visible but inactive</td>
+        </tr>
+        <tr>
+          <td>Flow fires for some people, not others</td>
+          <td>Trigger is connected to the campaign or ad set instead of the specific ad</td>
+          <td>Edit the trigger and re-select — go all the way down to the individual ad level</td>
+        </tr>
+        <tr>
+          <td>ManyChat isn't seeing your ads</td>
+          <td>ManyChat is connected to the wrong Facebook Page</td>
+          <td>Go to <strong>Settings → Connected Accounts</strong> and confirm it's the Page your ads run from</td>
+        </tr>
+        <tr>
+          <td>Test works, but real leads don't get the message</td>
+          <td>Testing from your own account (Meta blocks self-testing)</td>
+          <td>Ask a team member or a trusted contact to click the live ad and confirm receipt</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout warning">
+      <strong>Still stuck after all of this?</strong>
+      Reach out before spending more on traffic. Don't run a campaign on a broken flow — confirm it's working end-to-end first.
+    </div>
+  </section>
+
+  <!-- 04 OPTION 2: META NATIVE -->
+  <section class="section" id="option2">
+    <p class="section-label">04 /</p>
+    <h2>Option 2 — Meta Native Instant Reply</h2>
+    <p>If you're not using ManyChat or just need something live today, Meta has a built-in auto-reply that requires zero integrations. It's not as precise — it sends to everyone who first messages your Page, not just people from a specific ad — but it works and it's fast to set up.</p>
+
+    <div class="callout">
+      <strong>The tradeoff</strong>
+      This option sends one automatic reply to any new conversation on your Page — not just from your ad. You also can't build follow-up sequences from it. Use it as a temporary bridge while you get ManyChat sorted, not as a long-term solution.
+    </div>
+
+    <span class="step-label">Step 1 — Go to Meta Business Suite</span>
+    <p>Open:</p>
+    <a class="url-pill" href="https://business.facebook.com" target="_blank">→ business.facebook.com</a>
+    <p>Make sure you're in the correct business account before continuing.</p>
+
+    <span class="step-label">Step 2 — Open Inbox Settings</span>
+    <p>In the left menu, click <strong>Inbox.</strong> Then look for the <strong>Settings gear icon</strong> — usually in the top right of the Inbox view — and click it.</p>
+
+    <span class="step-label">Step 3 — Find Instant Reply</span>
+    <p>Look for <strong>"Instant Reply"</strong> or <strong>"Automated Responses"</strong> in the settings list. Toggle it <strong>ON.</strong></p>
+
+    <span class="step-label">Step 4 — Write Your Message</span>
+    <p>Type your automated reply. Keep it brief and include the link right up front. Example:</p>
+    <p><em>"Thanks for reaching out! Here's the link you requested: [YOUR OPT-IN PAGE LINK] — feel free to message me if you have any questions!"</em></p>
+
+    <span class="step-label">Step 5 — Save and Test</span>
+    <ol class="steps">
+      <li>Click <strong>Save</strong></li>
+      <li>Message your Page from a personal account (not your business account) to confirm the reply sends correctly</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>✓ One-time note</strong>
+      Instant Reply only fires the <em>first</em> time someone messages your Page. If they've ever messaged you before, they won't receive it again.
+    </div>
+  </section>
+
+  <!-- 05 COMPARE -->
+  <section class="section" id="compare">
+    <p class="section-label">05 /</p>
+    <h2>Which Option Should You Use?</h2>
+    <p>Here's a quick side-by-side to help you decide.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Option 1: ManyChat</th>
+          <th>Option 2: Meta Native</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sends link automatically</td>
+          <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Tied to a specific ad</td>
+          <td class="yes">Yes</td>
+          <td class="no-detail">No — fires for all Page messages</td>
+        </tr>
+        <tr>
+          <td>Can follow up with more messages</td>
+          <td class="yes">Yes</td>
+          <td class="no">No</td>
+        </tr>
+        <tr>
+          <td>Requires a ManyChat account</td>
+          <td>Yes</td>
+          <td class="yes">No</td>
+        </tr>
+        <tr>
+          <td>Setup time</td>
+          <td>10 min</td>
+          <td>5 min</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="success">
+      <div class="title">Recommendation</div>
+      If you have ManyChat, use Option 1 — it's more precise, more powerful, and the right long-term setup. If you're just getting started and want something live today, use Option 2 as a bridge while you get ManyChat configured.
+    </div>
+
+    <hr />
+
+    <p style="font-size: 14px; color: var(--muted);">Questions? Reach out before going live so we can confirm everything is firing correctly before you spend money on traffic.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Wild &amp; Wealthy team resource &nbsp;·&nbsp; Message Ad Automation Setup</p>
+</footer>
+
+</body>
+</html>
