@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta Pixel + CAPI Setup Guide — Wild &amp; Wealthy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #651D32;
+      --navy: #0A2541;
+      --green: #36482F;
+      --yellow: #F2C75C;
+      --cream: #F5EED7;
+      --text: #0A2541;
+      --muted: #5a6a7a;
+      --border: #e2d9c5;
+      --bg-soft: #F5EED7;
+      --bg-code: #eee8d5;
+      --max-width: 740px;
+    }
+
+    body {
+      font-family: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: #fff;
+      padding: 0 24px;
+    }
+
+    .top-bar {
+      background: var(--navy);
+      margin: 0 -24px;
+      padding: 12px 32px;
+    }
+    .top-bar span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 56px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    header .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta-item strong { color: var(--text); }
+
+    .prereq {
+      max-width: var(--max-width);
+      margin: 32px auto 0;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+    }
+    .prereq h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .prereq ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .prereq ul li::before {
+      content: "✓ ";
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    main { max-width: var(--max-width); margin: 0 auto; }
+
+    .section {
+      padding: 52px 0 44px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--burgundy);
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section p { margin-bottom: 16px; color: var(--text); }
+
+    .step-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin: 28px 0 8px;
+    }
+
+    ol.steps {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    ol.steps li { color: var(--text); }
+
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 12px 0 16px;
+      white-space: pre;
+    }
+
+    code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      background: var(--bg-code);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    .callout {
+      background: #fff8e6;
+      border-left: 3px solid var(--yellow);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+    }
+    .callout.tip {
+      background: #f0f7f0;
+      border-left-color: var(--green);
+    }
+    .callout.warning {
+      background: #fdf0f0;
+      border-left-color: var(--burgundy);
+    }
+
+    .success {
+      background: #f0f7f0;
+      border: 1px solid #c3dfc3;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .success .title {
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .prop-table {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .prop-table .row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .prop-table .row:last-child { border-bottom: none; }
+    .prop-table .key {
+      background: var(--bg-soft);
+      padding: 10px 14px;
+      font-weight: 600;
+      border-right: 1px solid var(--border);
+    }
+    .prop-table .val { padding: 10px 14px; }
+
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-soft);
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    .checklist-item .check {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--navy);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .mistake {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mistake:last-child { border-bottom: none; }
+    .mistake h4 {
+      font-weight: 700;
+      color: var(--burgundy);
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    th {
+      background: var(--bg-soft);
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .ghl-note {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--navy);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      max-width: var(--max-width);
+      margin: 48px auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer a { color: var(--burgundy); }
+
+    @media (max-width: 600px) {
+      .prop-table .row { grid-template-columns: 1fr; }
+      .prop-table .key { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — 8-Week Ads Mentorship</span>
+</div>
+
+<header>
+  <p class="eyebrow">Session 5 Resource</p>
+  <h1>Meta Pixel + Conversion API Setup Guide</h1>
+  <p class="subtitle">Install and verify your pixel, set up event tracking in GHL, and enable server-side CAPI — step by step.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Platform:</strong> GHL (GoHighLevel) only</div>
+    <div class="meta-item"><strong>Time required:</strong> 45–60 minutes</div>
+    <div class="meta-item"><strong>Device:</strong> Desktop recommended</div>
+  </div>
+</header>
+
+<div class="prereq">
+  <h3>Before you start — confirm you have all of this:</h3>
+  <ul>
+    <li>A personal Facebook account in good standing</li>
+    <li>A Meta Business Portfolio (Business Manager) set up</li>
+    <li>An Ad Account created inside Business Manager</li>
+    <li>Your GHL funnel live with real URLs (not draft/preview)</li>
+    <li>Admin access to your GHL account</li>
+    <li>A desktop or laptop — not a phone</li>
+  </ul>
+</div>
+
+<main>
+
+  <!-- 01 WHAT IS THE PIXEL -->
+  <section class="section" id="what-is-pixel">
+    <p class="section-label">01 /</p>
+    <h2>What Is the Pixel — and Why It Matters</h2>
+    <p>The Meta Pixel is a small piece of JavaScript code that you install on your funnel pages. Every time someone visits a page or takes an action (opts in, purchases), it fires a signal back to Meta.</p>
+    <p>Those signals teach Meta's algorithm who is engaging with your funnel — and over time, it uses that data to find more people like them. Without the pixel, your ads run blind. With it, your campaigns get smarter every day.</p>
+
+    <div class="prop-table">
+      <div class="row">
+        <div class="key">Base Code</div>
+        <div class="val">Goes on every page of your funnel — tells Meta when someone visited</div>
+      </div>
+      <div class="row">
+        <div class="key">Lead Event</div>
+        <div class="val">Goes on your opt-in thank-you page — fires when someone submits their info</div>
+      </div>
+      <div class="row">
+        <div class="key">Purchase Event</div>
+        <div class="val">Goes on your purchase confirmation page — fires when a sale is made</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <strong>The learning phase depends on this.</strong> Meta needs approximately 50 Lead events to exit the learning phase and stabilize your ad delivery. Every opt-in your pixel captures is feeding that count.
+    </div>
+  </section>
+
+  <!-- 02 CREATE YOUR PIXEL -->
+  <section class="section" id="create-pixel">
+    <p class="section-label">02 /</p>
+    <h2>Create Your Pixel in Meta Events Manager</h2>
+
+    <span class="step-label">Step 1 — Open Events Manager</span>
+    <p>Go to <a href="https://business.facebook.com/events_manager" target="_blank">business.facebook.com/events_manager</a> and make sure you are logged into the right Facebook account (the one tied to your Business Portfolio).</p>
+
+    <span class="step-label">Step 2 — Create a New Data Source</span>
+    <ol class="steps">
+      <li>Click <strong>+ Connect Data Sources</strong> (left sidebar or green button)</li>
+      <li>Select <strong>Web</strong></li>
+      <li>Click <strong>Connect</strong></li>
+    </ol>
+
+    <span class="step-label">Step 3 — Name Your Pixel</span>
+    <p>Give your pixel a clear name — something like <strong>Your Name — WW Funnel Pixel</strong>. You can only have one pixel per ad account, so name it something you'll recognize.</p>
+    <p>Enter your website URL when prompted and click <strong>Continue</strong>.</p>
+
+    <span class="step-label">Step 4 — Choose Your Setup Method</span>
+    <p>When Meta asks how you want to add the pixel to your website, select <strong>"Add code manually"</strong> — this gives you access to the actual code you'll need for GHL.</p>
+
+    <span class="step-label">Step 5 — Copy Your Pixel ID</span>
+    <p>After your pixel is created, find your <strong>Pixel ID</strong> — it's a 15–16 digit number visible in Events Manager under your pixel name. You'll need this in the next section.</p>
+
+    <div class="callout">
+      <strong>Already have a pixel?</strong> If you created one previously, do not create another. Go to Events Manager, find your existing pixel, and copy the Pixel ID from there. Using multiple pixels on the same funnel will cause tracking conflicts.
+    </div>
+  </section>
+
+  <!-- 03 INSTALL BASE CODE IN GHL -->
+  <section class="section" id="install-ghl">
+    <p class="section-label">03 /</p>
+    <h2>Install the Base Pixel Code in GHL</h2>
+    <p><span class="ghl-note">GHL Only</span> These steps are specific to GoHighLevel. If you are not using GHL as your funnel platform, this guide does not apply.</p>
+    <p>The base pixel code needs to go into the header of every page in your funnel. In GHL, you do this at the funnel level — so it applies to all pages automatically.</p>
+
+    <span class="step-label">Step 1 — Go to Your Funnel Settings</span>
+    <ol class="steps">
+      <li>In GHL, navigate to <strong>Funnels &amp; Websites</strong> → <strong>Funnels</strong></li>
+      <li>Click on your funnel</li>
+      <li>Go to the <strong>Settings</strong> tab (top right)</li>
+      <li>Scroll to <strong>Header Tracking Code</strong></li>
+    </ol>
+
+    <span class="step-label">Step 2 — Paste the Base Pixel Code</span>
+    <p>Copy the code below, replacing <code>YOUR_PIXEL_ID</code> with your actual 15–16 digit Pixel ID from Events Manager:</p>
+
+<pre><code>&lt;!-- Meta Pixel Code --&gt;
+&lt;script&gt;
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+&lt;/script&gt;
+&lt;noscript&gt;&lt;img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1"
+/&gt;&lt;/noscript&gt;
+&lt;!-- End Meta Pixel Code --&gt;</code></pre>
+
+    <span class="step-label">Step 3 — Save</span>
+    <p>Click <strong>Save</strong>. The base pixel code is now installed across every page of your funnel.</p>
+
+    <div class="callout tip">
+      <strong>Replace both instances of YOUR_PIXEL_ID.</strong> There are two places in the code above where your Pixel ID appears — the <code>fbq('init', ...)</code> line and the noscript image URL. Replace both.
+    </div>
+  </section>
+
+  <!-- 04 EVENT CODES -->
+  <section class="section" id="event-codes">
+    <p class="section-label">04 /</p>
+    <h2>Add Event Codes to Specific Pages</h2>
+    <p>Event codes fire on specific pages to tell Meta when a meaningful action happened. You'll add these at the individual page level inside your funnel.</p>
+
+    <span class="step-label">How to access a specific page's custom code in GHL</span>
+    <ol class="steps">
+      <li>Open your funnel → click into the page you want to edit</li>
+      <li>Click <strong>Settings</strong> (gear icon) on the page editor</li>
+      <li>Scroll to <strong>Custom Head Code</strong> or <strong>Custom JS/HTML</strong></li>
+      <li>Paste the event code below the base code (or on its own if base is at funnel level)</li>
+      <li>Save and publish the page</li>
+    </ol>
+
+    <span class="step-label">Lead Event — Opt-In Thank You Page</span>
+    <p>Paste this on the page someone lands on immediately after they submit their opt-in form:</p>
+
+<pre><code>&lt;script&gt;
+  fbq('track', 'Lead');
+&lt;/script&gt;</code></pre>
+
+    <span class="step-label">Purchase Event — Purchase Confirmation Page</span>
+    <p>Paste this on the page someone sees after completing a purchase. Update the <code>value</code> field to match your product price:</p>
+
+<pre><code>&lt;script&gt;
+  fbq('track', 'Purchase', {value: 0.00, currency: 'USD'});
+&lt;/script&gt;</code></pre>
+
+    <div class="callout">
+      <strong>Not selling directly through your funnel?</strong> If your funnel goes Ad → Opt-in → Webinar → and sales happen via call or separately, you may only need the Lead event for now. The Purchase event becomes more important once you're tracking direct sales through the funnel.
+    </div>
+  </section>
+
+  <!-- 05 VERIFY -->
+  <section class="section" id="verify">
+    <p class="section-label">05 /</p>
+    <h2>Verify Your Pixel is Firing</h2>
+    <p>Before moving on, confirm the pixel is actually working. The fastest way is the Meta Pixel Helper Chrome extension.</p>
+
+    <span class="step-label">Step 1 — Install Meta Pixel Helper</span>
+    <p>In Chrome, search <strong>"Meta Pixel Helper extension"</strong> and install it from the Chrome Web Store. It's free and takes 30 seconds.</p>
+
+    <span class="step-label">Step 2 — Visit Your Funnel Pages</span>
+    <ol class="steps">
+      <li>Open your funnel landing page in a new Chrome tab</li>
+      <li>Click the Pixel Helper icon in your Chrome toolbar (top right)</li>
+      <li>You should see a green checkmark with <strong>PageView</strong> — this confirms your base code is firing</li>
+      <li>Navigate to your opt-in thank-you page</li>
+      <li>Check Pixel Helper again — you should now see both <strong>PageView</strong> and <strong>Lead</strong></li>
+    </ol>
+
+    <div class="success">
+      <div class="title">✅ What success looks like</div>
+      Green icon with a count. Each event (PageView, Lead) appears with a green checkmark. If you see this on your landing page and thank-you page, your pixel is installed correctly.
+    </div>
+
+    <div class="callout warning">
+      <strong>Seeing red or no events?</strong>
+      <br/>— Make sure your funnel is published (not in draft mode)
+      <br/>— Confirm you replaced YOUR_PIXEL_ID with your actual Pixel ID in both places
+      <br/>— Check that the code is in the Header section, not the Footer
+      <br/>— Try clearing your cache and reloading the page
+    </div>
+  </section>
+
+  <!-- 06 CONNECT TO AD ACCOUNT -->
+  <section class="section" id="connect">
+    <p class="section-label">06 /</p>
+    <h2>Connect Your Pixel to Your Ad Account</h2>
+    <p>Your pixel needs to be linked to your Ad Account so that Meta can use the data it collects for campaign targeting and optimization.</p>
+
+    <span class="step-label">Step 1 — Go to Business Settings</span>
+    <ol class="steps">
+      <li>Go to <a href="https://business.facebook.com/settings" target="_blank">business.facebook.com/settings</a></li>
+      <li>In the left sidebar, scroll to <strong>Data Sources</strong> → click <strong>Pixels</strong></li>
+      <li>Select your pixel from the list</li>
+    </ol>
+
+    <span class="step-label">Step 2 — Add the Ad Account</span>
+    <ol class="steps">
+      <li>Click <strong>Add Assets</strong></li>
+      <li>Select <strong>Ad Accounts</strong></li>
+      <li>Check the box next to your Ad Account</li>
+      <li>Click <strong>Add</strong> to confirm</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>Already connected?</strong> If you see your Ad Account already listed under the pixel's assets, you're good — nothing to change.
+    </div>
+  </section>
+
+  <!-- 07 CAPI -->
+  <section class="section" id="capi">
+    <p class="section-label">07 /</p>
+    <h2>Set Up Conversion API (CAPI) in GHL</h2>
+    <p>The Conversions API (CAPI) sends event data directly from your server to Meta — in addition to the browser pixel. This gives Meta a more complete, reliable signal, especially for users with ad blockers or iOS privacy restrictions.</p>
+    <p>GHL has native CAPI support built in. You do not need to write any code.</p>
+
+    <span class="step-label">Step 1 — Connect Your Facebook Account in GHL</span>
+    <ol class="steps">
+      <li>In GHL, go to <strong>Settings</strong> → <strong>Integrations</strong></li>
+      <li>Find <strong>Facebook</strong> and click <strong>Connect</strong></li>
+      <li>Log into your personal Facebook account when prompted</li>
+      <li>Grant the requested permissions and click <strong>Continue</strong></li>
+    </ol>
+
+    <span class="step-label">Step 2 — Select Your Business Portfolio and Pixel</span>
+    <ol class="steps">
+      <li>After connecting, GHL will ask you to select your <strong>Business Manager</strong></li>
+      <li>Select the correct Business Portfolio (the one your Ad Account lives in)</li>
+      <li>Select your <strong>Pixel</strong> from the dropdown</li>
+      <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <span class="step-label">Step 3 — Enable Conversion API</span>
+    <ol class="steps">
+      <li>Still in Settings → Integrations → Facebook</li>
+      <li>Look for the <strong>Conversions API</strong> toggle</li>
+      <li>Turn it <strong>On</strong></li>
+      <li>Save your settings</li>
+    </ol>
+
+    <span class="step-label">Step 4 — Verify in Meta Events Manager</span>
+    <ol class="steps">
+      <li>Go back to <a href="https://business.facebook.com/events_manager" target="_blank">Events Manager</a></li>
+      <li>Select your pixel</li>
+      <li>Under <strong>Overview</strong>, you should now see events coming in from two sources: <strong>Browser</strong> (your pixel) and <strong>Server</strong> (CAPI)</li>
+    </ol>
+
+    <div class="success">
+      <div class="title">✅ What to look for</div>
+      In Events Manager → your pixel → Overview, you'll see a "Connection Method" column. When CAPI is working, events show as both Browser and Server. This means Meta is getting double the signal — more reliable, more accurate.
+    </div>
+
+    <div class="callout">
+      <strong>Don't see the CAPI toggle in GHL?</strong> GHL UI updates frequently. If the toggle isn't where described, check Settings → Facebook → Advanced Settings, or search "Conversions API" in the GHL help center. The functionality exists — the navigation may have shifted.
+    </div>
+  </section>
+
+  <!-- 08 CHECKLIST -->
+  <section class="section" id="checklist">
+    <p class="section-label">08 /</p>
+    <h2>Final Setup Checklist</h2>
+    <p>Before you launch your first campaign, confirm every item below:</p>
+    <div class="checklist">
+      <div class="checklist-item"><div class="check"></div><div>Pixel created in Meta Events Manager</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Base pixel code installed in GHL funnel header (all pages)</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Lead event code installed on opt-in thank-you page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green PageView on landing page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green Lead on thank-you page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Pixel connected to Ad Account in Business Settings</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Facebook account connected in GHL Integrations</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Conversions API enabled in GHL</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Events Manager shows both Browser and Server events</div></div>
+    </div>
+  </section>
+
+  <!-- 09 COMMON MISTAKES -->
+  <section class="section" id="mistakes">
+    <p class="section-label">09 /</p>
+    <h2>Common Mistakes to Avoid</h2>
+
+    <div class="mistake">
+      <h4>Using YOUR_PIXEL_ID literally</h4>
+      <p>The most common issue. <code>YOUR_PIXEL_ID</code> in the code above is a placeholder — you must replace it with your actual 15–16 digit Pixel ID from Events Manager. The code will not work otherwise, and you won't get an error message — it will just silently fail.</p>
+    </div>
+
+    <div class="mistake">
+      <h4>Installing at the page level when you should use funnel-level</h4>
+      <p>The base code should go in your funnel's header settings — this applies it to every page automatically. If you paste it only on one page, the other pages won't track. Event codes (Lead, Purchase) are the exception — those go on specific pages only.</p>
+    </div>
+
+    <div class="mistake">
+      <h4>Installing on a draft or preview URL</h4>
+      <p>Your pixel only fires on the live, published version of your funnel. The preview URL and draft mode do not count. Always verify on the real, public URL.</p>
+    </div>
+
+    <div class="mistake">
+      <h4>Creating multiple pixels</h4>
+      <p>One pixel per ad account. If you create a second pixel and install both on your funnel, you'll get duplicate events and skewed data. Check Events Manager before creating a new one — you may already have one from a previous setup.</p>
+    </div>
+
+    <div class="mistake">
+      <h4>Skipping the Pixel Helper verification step</h4>
+      <p>Skipping verification means you might run ads for days before realizing the pixel isn't firing. Spend 5 minutes on this step. It saves hours of troubleshooting later.</p>
+    </div>
+
+    <div class="mistake">
+      <h4>Not enabling CAPI</h4>
+      <p>Browser-only pixel tracking misses a growing percentage of users due to ad blockers, iOS 14+ privacy changes, and browser restrictions. CAPI fills those gaps. If you skipped Section 07, go back and do it — it takes 10 minutes and makes your data significantly more reliable.</p>
+    </div>
+  </section>
+
+  <!-- 10 TROUBLESHOOTING -->
+  <section class="section" id="troubleshooting">
+    <p class="section-label">10 /</p>
+    <h2>Troubleshooting</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>What you see</th>
+          <th>Most likely cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pixel Helper shows no events</td>
+          <td>Code not installed, or funnel is not published</td>
+          <td>Confirm you saved the funnel header code in GHL and that your funnel is live — not in draft or preview mode</td>
+        </tr>
+        <tr>
+          <td>PageView fires but Lead does not</td>
+          <td>Lead event code is missing or on the wrong page</td>
+          <td>Check that the Lead event code is on the thank-you page that loads after someone submits the opt-in form — not the opt-in page itself</td>
+        </tr>
+        <tr>
+          <td>Pixel Helper shows red</td>
+          <td>Pixel ID mismatch or code error</td>
+          <td>Open the Pixel Helper details — it will show the specific error. Most often: wrong Pixel ID, or the code is malformed. Re-paste the code from scratch.</td>
+        </tr>
+        <tr>
+          <td>Events Manager shows 0 activity</td>
+          <td>Pixel not connected to Ad Account, or no real page visits yet</td>
+          <td>Confirm the pixel is connected to your Ad Account (Section 06), then visit your funnel pages yourself to trigger test events</td>
+        </tr>
+        <tr>
+          <td>CAPI toggle not visible in GHL</td>
+          <td>GHL UI may have updated</td>
+          <td>Search "Conversions API" in GHL's help center — the feature exists, the navigation path may have shifted. Bring your screenshot to Session 6 if you're stuck.</td>
+        </tr>
+        <tr>
+          <td>Events Manager shows duplicate events</td>
+          <td>Two pixels installed on the same funnel</td>
+          <td>Go to Events Manager and check how many pixels are associated with your account. Remove the duplicate, or remove one of the code installations from your funnel.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Still stuck after following these steps?</strong> Bring a screenshot of your Events Manager overview and the specific error to Session 6 (Buffer + Catch-Up Week). That's exactly what that session is for.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Wild &amp; Wealthy — 8-Week Ads Mentorship &nbsp;·&nbsp; Session 5 Resource &nbsp;·&nbsp; GHL platform only</p>
+</footer>
+
+</body>
+</html>
