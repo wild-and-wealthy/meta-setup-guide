@@ -29,32 +29,30 @@
     .section h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px, 3vw, 30px); font-weight: 900; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
     .section p { margin-bottom: 16px; }
     .step-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin: 28px 0 8px; }
-    ol.steps { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
     .callout { background: #fff8e6; border-left: 3px solid var(--yellow); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 20px 0; font-size: 15px; }
     .callout.tip { background: #f0f7f0; border-left-color: var(--green); }
     .callout.warning { background: #fdf0f0; border-left-color: var(--burgundy); }
     pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 12px 0 16px; white-space: pre-wrap; }
-    code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; background: var(--bg-code); padding: 2px 6px; border-radius: 4px; }
-    .interest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+    .interest-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
     .interest-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
     .interest-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
     .interest-card .cat-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 12px; display: block; }
+    .interest-card .note { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
     .interest-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .interest-card ul li { font-size: 14px; padding-left: 14px; position: relative; }
     .interest-card ul li::before { content: "–"; position: absolute; left: 0; color: var(--muted); }
-    .avoid-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
-    .avoid-list li { display: flex; gap: 12px; padding: 14px 16px; background: #fdf0f0; border-radius: 6px; font-size: 15px; border-left: 3px solid var(--burgundy); }
+    .avoid-group { margin: 20px 0; }
+    .avoid-group h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 10px; }
+    .avoid-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .avoid-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fdf0f0; border-radius: 6px; font-size: 14px; border-left: 3px solid var(--burgundy); }
     .avoid-list li::before { content: "✕"; color: var(--burgundy); font-weight: 700; flex-shrink: 0; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0; }
     th { background: var(--bg-soft); text-align: left; padding: 10px 14px; font-weight: 700; border-bottom: 2px solid var(--border); }
     td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-    .phase-steps { counter-reset: steps; display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
-    .phase-step { display: flex; gap: 16px; padding: 16px; background: var(--bg-soft); border-radius: 8px; }
-    .phase-step .num { width: 28px; height: 28px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-    .phase-step .content strong { display: block; margin-bottom: 4px; }
-    .phase-step .content { font-size: 15px; }
     footer { max-width: var(--max-width); margin: 48px auto; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
-    footer a { color: var(--burgundy); }
+    @media (max-width: 520px) {
+      .interest-cols { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -66,7 +64,7 @@
 <header>
   <p class="eyebrow">Session 5 Resource</p>
   <h1>Interest Research Guide</h1>
-  <p class="subtitle">How to choose your audience interests, how to research them in Meta, and how to test them the right way.</p>
+  <p class="subtitle">How to pick your audience interests, what to avoid, and how to research them before you launch.</p>
   <div class="meta-row">
     <div class="meta-item"><strong>When to use:</strong> Before launching your Phase 1 campaign</div>
     <div class="meta-item"><strong>Time required:</strong> 15–20 minutes</div>
@@ -82,7 +80,7 @@
     <p>This means one thing: <strong>Advantage+ Detailed Targeting stays on, always.</strong> You are not locking Meta into a narrow audience. You are giving it a starting direction and letting it find the right people from there.</p>
 
     <div class="callout tip">
-      <strong>The practical approach:</strong> Advantage+ ON + 2–3 interest seeds. That's it. Don't overthink the targeting — put your energy into the creative. Your ad is doing the real targeting work.
+      <strong>The setup:</strong> Advantage+ ON + 1 influencer interest + 1 intent interest. That's it. Don't overthink the targeting — put your energy into the creative. Your ad is doing the real targeting work.
     </div>
 
     <p>The interests you add act as a nudge — Meta uses them to calibrate early delivery, then expands as it learns who is actually converting. The better your creative, the less you need to manually guide it.</p>
@@ -90,62 +88,86 @@
 
   <section class="section" id="categories">
     <p class="section-label">02 /</p>
-    <h2>The 3 Interest Categories to Focus On</h2>
-    <p>Choose 2–3 interests total — mix across categories. Identity interests are the strongest starting point for most people in this cohort.</p>
+    <h2>Two Types of Interests</h2>
+    <p>Pick one from each column — an influencer interest and an intent interest. Add both to your ad set alongside Advantage+.</p>
 
-    <div class="interest-grid">
+    <div class="interest-cols">
       <div class="interest-card">
-        <span class="cat-label">Category 1</span>
-        <h4>Identity Interests</h4>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Who she IS — how she sees herself</p>
+        <span class="cat-label">Type 1</span>
+        <h4>Influencer Interests</h4>
+        <p class="note">People who follow these figures have already self-identified as wanting an online business or a freer life — strong buyer signal.</p>
         <ul>
-          <li>Entrepreneurship</li>
-          <li>Small business owner</li>
+          <li>Amy Porterfield</li>
+          <li>Jenna Kutcher</li>
+          <li>Marie Forleo</li>
+          <li>Tony Robbins</li>
+          <li>Russell Brunson</li>
+          <li>Alex Hormozi</li>
+          <li>Dean Graziosi</li>
+          <li>Brendon Burchard</li>
+          <li>Denise Duffield-Thomas</li>
+          <li>Tim Ferriss</li>
+          <li>Mel Robbins</li>
+          <li>Rachel Rodgers</li>
+        </ul>
+      </div>
+      <div class="interest-card">
+        <span class="cat-label">Type 2</span>
+        <h4>Intent Interests</h4>
+        <p class="note">Signal someone actively looking for a solution — not just passively scrolling.</p>
+        <ul>
           <li>Online business</li>
-          <li>Work from home</li>
-          <li>Female entrepreneur</li>
-          <li>Digital nomad</li>
-          <li>Side hustle</li>
-          <li>Personal development</li>
-        </ul>
-      </div>
-      <div class="interest-card">
-        <span class="cat-label">Category 2</span>
-        <h4>Desire Interests</h4>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">What she WANTS — the outcome she's after</p>
-        <ul>
+          <li>Entrepreneurship</li>
           <li>Financial independence</li>
-          <li>Passive income</li>
-          <li>Time freedom</li>
-          <li>Flexible work</li>
-          <li>Life coaching</li>
-          <li>Self-improvement</li>
-          <li>Wealth building</li>
+          <li>Work from home</li>
+          <li>Digital marketing</li>
+          <li>Affiliate marketing</li>
         </ul>
       </div>
-      <div class="interest-card">
-        <span class="cat-label">Category 3</span>
-        <h4>Wellness Interests</h4>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Use if your ad leans into health/water</p>
-        <ul>
-          <li>Health and wellness</li>
-          <li>Holistic health</li>
-          <li>Alternative health</li>
-          <li>Clean living</li>
-          <li>Wellbeing</li>
-        </ul>
-      </div>
+    </div>
+
+    <div class="callout warning">
+      <strong>Important: many influencer names won't appear exactly in Meta.</strong> When you search a name, Meta may return a broader category instead — for example, searching "Amy Porterfield" returns "Marketing personalities (marketing)." That broader category is still a strong signal and is fine to use. Just be aware you're targeting everyone in that category, not only that person's followers.
     </div>
   </section>
 
   <section class="section" id="avoid">
     <p class="section-label">03 /</p>
     <h2>What to Avoid</h2>
-    <ul class="avoid-list">
-      <li>"Network marketing" or "Multi-level marketing" — attracts people already in other companies or burned out on the model. Not your person.</li>
-      <li>Single overly broad words like "Health" or "Business" — too much noise, poor targeting signal even as a seed.</li>
-      <li>Competitor brand names — can trigger ad rejection and won't attract the right audience anyway.</li>
-    </ul>
+    <p>These interests attract the wrong type of person, inflate your CPM without improving lead quality, or pull in people in browsing mode rather than buying mode.</p>
+
+    <div class="avoid-group">
+      <h4>Wrong buyer intent</h4>
+      <ul class="avoid-list">
+        <li><strong>Side hustle</strong> — attracts $20/hr gig seekers. Low commitment, high churn.</li>
+        <li><strong>Passive income</strong> — get-rich-quick browsers. Low conversion on training-based offers.</li>
+        <li><strong>Work-life balance</strong> — sounds perfect but performs poorly. Inspiration-seekers, not action-takers. Very low buyer intent.</li>
+        <li><strong>Self-improvement / Motivation / Mindfulness</strong> — content consumers, not offer converters.</li>
+        <li><strong>Career change</strong> — these people want a new job, not a business.</li>
+        <li><strong>Digital nomad / Freelancing</strong> — aspirational dreamers or trade-time-for-money types. Wrong model.</li>
+      </ul>
+    </div>
+
+    <div class="avoid-group">
+      <h4>Too vague or too broad</h4>
+      <ul class="avoid-list">
+        <li><strong>Female empowerment</strong> — enormous audience with no business intent. Inflates CPM with weak lead quality.</li>
+        <li><strong>Entrepreneur Magazine / Forbes / Business Insider</strong> — content consumers, not offer converters.</li>
+        <li><strong>Oprah Winfrey</strong> — too broad. No meaningful buyer signal.</li>
+      </ul>
+    </div>
+
+    <div class="avoid-group">
+      <h4>Wrong model associations</h4>
+      <ul class="avoid-list">
+        <li><strong>Network marketing / Multi-level marketing</strong> — attracts people already in other companies or burned out on the model.</li>
+        <li><strong>Rachel Hollis</strong> — fragmented post-controversy. Unpredictable performance.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Always confirm an interest exists before using it.</strong> Some interests that sound right have been quietly removed by Meta. Search inside Ads Manager before building around it — if it doesn't appear, it's gone. ClickFunnels, for example, is not a targetable Meta interest.
+    </div>
   </section>
 
   <section class="section" id="research">
@@ -156,87 +178,55 @@
     <span class="step-label">Step 1 — Navigate to Ad Set Level</span>
     <p>Open Meta Ads Manager → Create or Edit Campaign → go to the <strong>Ad Set</strong> level → scroll to <strong>Detailed Targeting</strong>.</p>
 
-    <span class="step-label">Step 2 — Search Your Seed Keywords</span>
-    <p>Click into the search bar and type a keyword (e.g., "entrepreneurship"). Meta will show you matching interests and their estimated reach.</p>
+    <span class="step-label">Step 2 — Search Your Keywords</span>
+    <p>Click into the search bar and type a name or keyword. Meta will show you matching interests. If an exact name doesn't appear, look at what Meta suggests instead — the category bucket it returns is still usable.</p>
 
     <span class="step-label">Step 3 — Browse Suggestions</span>
-    <p>After selecting an interest, click <strong>Suggestions</strong> — Meta will recommend related interests based on what you've already chosen. This is often where you find the best options.</p>
-
-    <span class="step-label">Step 4 — Check Audience Size</span>
-    <p>For Phase 1 testing, aim for <strong>1M–5M</strong> estimated reach per interest. Too small = restricted delivery. Too large = weak signal.</p>
-
-    <div class="callout">
-      <strong>Don't stack interests in one ad set.</strong> If you add 8 interests to one ad set, you can't tell which one is working. In Phase 1, keep it to 2–3 max — and if you want to test more, duplicate the ad set rather than adding them all together.
-    </div>
+    <p>After selecting an interest, click <strong>Suggestions</strong> — Meta will recommend related interests based on what you've already chosen. This is often where you find unexpected strong options.</p>
   </section>
 
-  <section class="section" id="chatgpt">
+  <section class="section" id="ai">
     <p class="section-label">05 /</p>
-    <h2>ChatGPT Prompt for Interest Research</h2>
-    <p>Use this before going into Meta to generate a starting list, then verify each one inside Ads Manager:</p>
+    <h2>Use AI to Generate Ideas</h2>
+    <p>Use an AI tool (ChatGPT, Claude, etc.) to brainstorm a starting list, then verify each one inside Ads Manager:</p>
 
-<pre>"I'm running Meta ads targeting women aged 28–40 who want to build a flexible, income-generating business from home. They value health, personal freedom, and financial independence. They are entrepreneurially-minded but skeptical of traditional MLM.
+<pre>"I run a digital business mentorship that helps people build an income-generating online business. My audience is entrepreneurially-minded but skeptical of traditional MLM.
 
-Give me 30 Facebook interest targeting ideas across three categories:
-1. Identity-based interests (who she is)
-2. Aspiration/outcome-based interests (what she wants)
-3. Health/lifestyle interests
+Give me 20 Facebook interest targeting ideas across two categories:
+1. Influencers or public figures my audience likely follows (online business, entrepreneurship, personal finance, or personal development)
+2. Topic or intent-based interests (what they're actively searching for or interested in — business-building, income, freedom)
 
 Format as a simple list under each category."</pre>
 
-    <p>Take the output into Meta Ads Manager and search each suggestion — confirm it exists as a targetable interest and check the estimated audience size before using it.</p>
+    <p>Take the output into Meta Ads Manager and search each suggestion. Confirm it exists as a targetable interest before using it. The category Meta returns is fine even if the exact name doesn't match.</p>
   </section>
 
   <section class="section" id="quickref">
     <p class="section-label">06 /</p>
-    <h2>Quick Reference — Top Interests to Test First</h2>
+    <h2>Recommended Starting Pairings</h2>
+    <p>Each row is one suggested pairing — one influencer interest + one intent interest added together in your ad set.</p>
 
     <table>
       <thead>
         <tr>
-          <th>Interest</th>
-          <th>Category</th>
-          <th>Why it works</th>
+          <th>Influencer Interest</th>
+          <th>Intent Interest</th>
+          <th>Angle</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Entrepreneurship</td><td>Identity</td><td>High-intent, strong reach, broad appeal</td></tr>
-        <tr><td>Financial independence</td><td>Desire</td><td>Matches the income goal directly</td></tr>
-        <tr><td>Work from home</td><td>Identity</td><td>Clear lifestyle match for the ICA</td></tr>
-        <tr><td>Personal development</td><td>Aspiration</td><td>Attracts growth-minded women</td></tr>
-        <tr><td>Side hustle</td><td>Desire</td><td>Lower-barrier entry point, high volume</td></tr>
-        <tr><td>Health and wellness</td><td>Wellness</td><td>Works when ad leans into the health angle</td></tr>
-        <tr><td>Digital nomad</td><td>Identity</td><td>Freedom-seekers, travel-adjacent</td></tr>
-        <tr><td>Female entrepreneur</td><td>Identity</td><td>Gender + business signal in one interest</td></tr>
+        <tr><td>Amy Porterfield</td><td>Online business</td><td>Best starting point — broadest buyer overlap</td></tr>
+        <tr><td>Jenna Kutcher</td><td>Work from home</td><td>Lifestyle / purpose angle</td></tr>
+        <tr><td>Tony Robbins</td><td>Financial independence</td><td>Mindset + income motivation</td></tr>
+        <tr><td>Marie Forleo</td><td>Entrepreneurship</td><td>Business-building focus</td></tr>
+        <tr><td>Russell Brunson</td><td>Online business</td><td>Funnel / offer-aware audience</td></tr>
+        <tr><td>Alex Hormozi</td><td>Digital marketing</td><td>Growth-focused, willing to invest</td></tr>
+        <tr><td>Tim Ferriss</td><td>Financial independence</td><td>Time-freedom / corporate escapee angle</td></tr>
       </tbody>
     </table>
-  </section>
-
-  <section class="section" id="testing">
-    <p class="section-label">07 /</p>
-    <h2>The Phase 1 Approach to Interests</h2>
-
-    <div class="phase-steps">
-      <div class="phase-step">
-        <div class="num">1</div>
-        <div class="content"><strong>Keep Advantage+ on</strong> This is non-negotiable. You are not restricting your audience — you are giving Meta a starting point.</div>
-      </div>
-      <div class="phase-step">
-        <div class="num">2</div>
-        <div class="content"><strong>Add 2–3 identity interests as seeds</strong> Start with the Identity category — these tend to perform best for this audience. Entrepreneurship + Financial independence + Work from home is a solid Phase 1 starting point.</div>
-      </div>
-      <div class="phase-step">
-        <div class="num">3</div>
-        <div class="content"><strong>Let it run for 7 days before touching anything</strong> The learning phase needs time. Resist the urge to change targeting mid-flight — it resets the algorithm's progress.</div>
-      </div>
-      <div class="phase-step">
-        <div class="num">4</div>
-        <div class="content"><strong>After 7 days, read your CPL</strong> If cost per lead is reasonable and lead quality feels right, stay the course. If results are poor, you can test removing interests entirely and running truly broad in Phase 2.</div>
-      </div>
-    </div>
 
     <div class="callout tip">
-      <strong>Your ad is your targeting.</strong> The more specific and resonant your creative, the better Meta gets at finding the right person — regardless of what interests you've selected. In Phase 1, the message matters more than the audience settings.
+      <strong>Start with row 1 (Amy Porterfield + Online business).</strong> It has the broadest buyer overlap for this offer. Stay with it until you have data before changing anything.
     </div>
   </section>
 
