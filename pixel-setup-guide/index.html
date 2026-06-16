@@ -360,18 +360,24 @@
     <p>The Meta Pixel is a small piece of JavaScript code that you install on your funnel pages. Every time someone visits a page or takes an action (opts in, purchases), it fires a signal back to Meta.</p>
     <p>Those signals teach Meta's algorithm who is engaging with your funnel — and over time, it uses that data to find more people like them. Without the pixel, your ads run blind. With it, your campaigns get smarter every day.</p>
 
+    <p>The further someone gets into your funnel, the more valuable the signal. Each event teaches Meta something different:</p>
+
     <div class="prop-table">
       <div class="row">
-        <div class="key">Base Code</div>
-        <div class="val">Goes on every page of your funnel — tells Meta when someone visited</div>
+        <div class="key">Base Code (PageView)</div>
+        <div class="val">Goes on every page — fires when anyone visits. Your baseline signal.</div>
       </div>
       <div class="row">
         <div class="key">Lead Event</div>
-        <div class="val">Goes on your opt-in thank-you page — fires when someone submits their info</div>
+        <div class="val">Goes on your opt-in thank-you page — fires when someone submits their info. This is what feeds the learning phase.</div>
+      </div>
+      <div class="row">
+        <div class="key">InitiateCheckout Event</div>
+        <div class="val">Goes on your sales/checkout page — fires when someone reaches the purchase step. Signals high intent.</div>
       </div>
       <div class="row">
         <div class="key">Purchase Event</div>
-        <div class="val">Goes on your purchase confirmation page — fires when a sale is made</div>
+        <div class="val">Goes on your order confirmation page — fires when a sale is completed.</div>
       </div>
     </div>
 
@@ -476,16 +482,19 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
   fbq('track', 'Lead');
 &lt;/script&gt;</code></pre>
 
-    <span class="step-label">Purchase Event — Purchase Confirmation Page</span>
-    <p>Paste this on the page someone sees after completing a purchase. Update the <code>value</code> field to match your product price:</p>
+    <span class="step-label">InitiateCheckout Event — Sales / Checkout Page</span>
+    <p>Paste this on the page where someone reaches the purchase step — before they've paid. This fires when someone shows high purchase intent:</p>
+
+<pre><code>&lt;script&gt;
+  fbq('track', 'InitiateCheckout');
+&lt;/script&gt;</code></pre>
+
+    <span class="step-label">Purchase Event — Order Confirmation Page</span>
+    <p>Paste this on the page someone lands on after completing a purchase. Update the <code>value</code> field to match your product price:</p>
 
 <pre><code>&lt;script&gt;
   fbq('track', 'Purchase', {value: 0.00, currency: 'USD'});
 &lt;/script&gt;</code></pre>
-
-    <div class="callout">
-      <strong>Not selling directly through your funnel?</strong> If your funnel goes Ad → Opt-in → Webinar → and sales happen via call or separately, you may only need the Lead event for now. The Purchase event becomes more important once you're tracking direct sales through the funnel.
-    </div>
   </section>
 
   <!-- 05 VERIFY -->
@@ -504,11 +513,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <li>You should see a green checkmark with <strong>PageView</strong> — this confirms your base code is firing</li>
       <li>Navigate to your opt-in thank-you page</li>
       <li>Check Pixel Helper again — you should now see both <strong>PageView</strong> and <strong>Lead</strong></li>
+      <li>Navigate to your sales/checkout page — you should see <strong>InitiateCheckout</strong> firing</li>
+      <li>Navigate to your order confirmation page — you should see <strong>Purchase</strong> firing</li>
     </ol>
 
     <div class="success">
       <div class="title">✅ What success looks like</div>
-      Green icon with a count. Each event (PageView, Lead) appears with a green checkmark. If you see this on your landing page and thank-you page, your pixel is installed correctly.
+      Green icon with a count. Each event (PageView, Lead, InitiateCheckout, Purchase) appears with a green checkmark on the correct page. If PageView fires everywhere and each event fires only on its designated page, your pixel is installed correctly.
     </div>
 
     <div class="callout warning">
