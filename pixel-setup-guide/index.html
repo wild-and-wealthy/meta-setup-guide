@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta Pixel + CAPI Setup Guide — Wild &amp; Wealthy</title>
+  <title>Meta Pixel Setup Guide — Wild &amp; Wealthy</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -330,8 +330,8 @@
 
 <header>
   <p class="eyebrow">Session 5 Resource</p>
-  <h1>Meta Pixel + Conversion API Setup Guide</h1>
-  <p class="subtitle">Install and verify your pixel, set up event tracking in GHL, and enable server-side CAPI — step by step.</p>
+  <h1>Meta Pixel Setup Guide</h1>
+  <p class="subtitle">Install your pixel, set up event tracking in GHL, and verify it's firing — step by step.</p>
   <div class="meta-row">
     <div class="meta-item"><strong>Platform:</strong> GHL (GoHighLevel) only</div>
     <div class="meta-item"><strong>Time required:</strong> 45–60 minutes</div>
@@ -346,7 +346,6 @@
     <li>A Meta Business Portfolio (Business Manager) set up</li>
     <li>An Ad Account created inside Business Manager</li>
     <li>Your GHL funnel live with real URLs (not draft/preview)</li>
-    <li>Admin access to your GHL account</li>
     <li>A desktop or laptop — not a phone</li>
   </ul>
 </div>
@@ -369,7 +368,7 @@
       </div>
       <div class="row">
         <div class="key">Lead Event</div>
-        <div class="val">Goes on your opt-in thank-you page — fires when someone submits their info. This is what feeds the learning phase.</div>
+        <div class="val">Goes on your masterclass page — fires when someone submits their info. This is what feeds the learning phase.</div>
       </div>
       <div class="row">
         <div class="key">InitiateCheckout Event</div>
@@ -402,7 +401,7 @@
     </ol>
 
     <span class="step-label">Step 3 — Name Your Pixel</span>
-    <p>Give your pixel a clear name — something like <strong>Your Name — WW Funnel Pixel</strong>. You can only have one pixel per ad account, so name it something you'll recognize.</p>
+    <p>Give your pixel a clear name — something like <strong>Sarah Johnson — Funnel Pixel</strong>. Name it something you'll recognize.</p>
     <p>Enter your website URL when prompted and click <strong>Continue</strong>.</p>
 
     <span class="step-label">Step 4 — Choose Your Setup Method</span>
@@ -475,8 +474,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <li>Save and publish the page</li>
     </ol>
 
-    <span class="step-label">Lead Event — Opt-In Thank You Page</span>
-    <p>Paste this on the page someone lands on immediately after they submit their opt-in form:</p>
+    <span class="step-label">Lead Event — Masterclass Page</span>
+    <p>Paste this on your masterclass page — the page someone lands on after submitting their info:</p>
 
 <pre><code>&lt;script&gt;
   fbq('track', 'Lead');
@@ -490,10 +489,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
 &lt;/script&gt;</code></pre>
 
     <span class="step-label">Purchase Event — Order Confirmation Page</span>
-    <p>Paste this on the page someone lands on after completing a purchase. Update the <code>value</code> field to match your product price:</p>
+    <p>Paste this on the page someone lands on after completing a purchase. Update the <code>value</code> field to match your product price (example below uses $99):</p>
 
 <pre><code>&lt;script&gt;
-  fbq('track', 'Purchase', {value: 0.00, currency: 'USD'});
+  fbq('track', 'Purchase', {value: 99.00, currency: 'USD'});
 &lt;/script&gt;</code></pre>
   </section>
 
@@ -511,7 +510,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <li>Open your funnel landing page in a new Chrome tab</li>
       <li>Click the Pixel Helper icon in your Chrome toolbar (top right)</li>
       <li>You should see a green checkmark with <strong>PageView</strong> — this confirms your base code is firing</li>
-      <li>Navigate to your opt-in thank-you page</li>
+      <li>Navigate to your masterclass page</li>
       <li>Check Pixel Helper again — you should now see both <strong>PageView</strong> and <strong>Lead</strong></li>
       <li>Navigate to your sales/checkout page — you should see <strong>InitiateCheckout</strong> firing</li>
       <li>Navigate to your order confirmation page — you should see <strong>Purchase</strong> firing</li>
@@ -557,75 +556,26 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
     </div>
   </section>
 
-  <!-- 07 CAPI -->
-  <section class="section" id="capi">
-    <p class="section-label">07 /</p>
-    <h2>Set Up Conversion API (CAPI) in GHL</h2>
-    <p>The Conversions API (CAPI) sends event data directly from your server to Meta — in addition to the browser pixel. This gives Meta a more complete, reliable signal, especially for users with ad blockers or iOS privacy restrictions.</p>
-    <p>GHL has native CAPI support built in. You do not need to write any code.</p>
-
-    <span class="step-label">Step 1 — Connect Your Facebook Account in GHL</span>
-    <ol class="steps">
-      <li>In GHL, go to <strong>Settings</strong> → <strong>Integrations</strong></li>
-      <li>Find <strong>Facebook</strong> and click <strong>Connect</strong></li>
-      <li>Log into your personal Facebook account when prompted</li>
-      <li>Grant the requested permissions and click <strong>Continue</strong></li>
-    </ol>
-
-    <span class="step-label">Step 2 — Select Your Business Portfolio and Pixel</span>
-    <ol class="steps">
-      <li>After connecting, GHL will ask you to select your <strong>Business Manager</strong></li>
-      <li>Select the correct Business Portfolio (the one your Ad Account lives in)</li>
-      <li>Select your <strong>Pixel</strong> from the dropdown</li>
-      <li>Click <strong>Save</strong></li>
-    </ol>
-
-    <span class="step-label">Step 3 — Enable Conversion API</span>
-    <ol class="steps">
-      <li>Still in Settings → Integrations → Facebook</li>
-      <li>Look for the <strong>Conversions API</strong> toggle</li>
-      <li>Turn it <strong>On</strong></li>
-      <li>Save your settings</li>
-    </ol>
-
-    <span class="step-label">Step 4 — Verify in Meta Events Manager</span>
-    <ol class="steps">
-      <li>Go back to <a href="https://business.facebook.com/events_manager" target="_blank">Events Manager</a></li>
-      <li>Select your pixel</li>
-      <li>Under <strong>Overview</strong>, you should now see events coming in from two sources: <strong>Browser</strong> (your pixel) and <strong>Server</strong> (CAPI)</li>
-    </ol>
-
-    <div class="success">
-      <div class="title">✅ What to look for</div>
-      In Events Manager → your pixel → Overview, you'll see a "Connection Method" column. When CAPI is working, events show as both Browser and Server. This means Meta is getting double the signal — more reliable, more accurate.
-    </div>
-
-    <div class="callout">
-      <strong>Don't see the CAPI toggle in GHL?</strong> GHL UI updates frequently. If the toggle isn't where described, check Settings → Facebook → Advanced Settings, or search "Conversions API" in the GHL help center. The functionality exists — the navigation may have shifted.
-    </div>
-  </section>
-
-  <!-- 08 CHECKLIST -->
+  <!-- 07 CHECKLIST -->
   <section class="section" id="checklist">
-    <p class="section-label">08 /</p>
+    <p class="section-label">07 /</p>
     <h2>Final Setup Checklist</h2>
     <p>Before you launch your first campaign, confirm every item below:</p>
     <div class="checklist">
       <div class="checklist-item"><div class="check"></div><div>Pixel created in Meta Events Manager</div></div>
       <div class="checklist-item"><div class="check"></div><div>Base pixel code installed in GHL funnel header (all pages)</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Lead event code installed on opt-in thank-you page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Lead event code installed on masterclass page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>InitiateCheckout event code installed on sales/checkout page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Purchase event code installed on order confirmation page</div></div>
       <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green PageView on landing page</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green Lead on thank-you page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green Lead on masterclass page</div></div>
       <div class="checklist-item"><div class="check"></div><div>Pixel connected to Ad Account in Business Settings</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Facebook account connected in GHL Integrations</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Conversions API enabled in GHL</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Events Manager shows both Browser and Server events</div></div>
     </div>
   </section>
 
   <!-- 09 COMMON MISTAKES -->
   <section class="section" id="mistakes">
-    <p class="section-label">09 /</p>
+    <p class="section-label">08 /</p>
     <h2>Common Mistakes to Avoid</h2>
 
     <div class="mistake">
@@ -653,15 +603,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <p>Skipping verification means you might run ads for days before realizing the pixel isn't firing. Spend 5 minutes on this step. It saves hours of troubleshooting later.</p>
     </div>
 
-    <div class="mistake">
-      <h4>Not enabling CAPI</h4>
-      <p>Browser-only pixel tracking misses a growing percentage of users due to ad blockers, iOS 14+ privacy changes, and browser restrictions. CAPI fills those gaps. If you skipped Section 07, go back and do it — it takes 10 minutes and makes your data significantly more reliable.</p>
-    </div>
   </section>
 
   <!-- 10 TROUBLESHOOTING -->
   <section class="section" id="troubleshooting">
-    <p class="section-label">10 /</p>
+    <p class="section-label">09 /</p>
     <h2>Troubleshooting</h2>
 
     <table>
@@ -694,11 +640,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
           <td>Confirm the pixel is connected to your Ad Account (Section 06), then visit your funnel pages yourself to trigger test events</td>
         </tr>
         <tr>
-          <td>CAPI toggle not visible in GHL</td>
-          <td>GHL UI may have updated</td>
-          <td>Search "Conversions API" in GHL's help center — the feature exists, the navigation path may have shifted. Bring your screenshot to Session 6 if you're stuck.</td>
-        </tr>
-        <tr>
           <td>Events Manager shows duplicate events</td>
           <td>Two pixels installed on the same funnel</td>
           <td>Go to Events Manager and check how many pixels are associated with your account. Remove the duplicate, or remove one of the code installations from your funnel.</td>
@@ -706,9 +647,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       </tbody>
     </table>
 
-    <div class="callout">
-      <strong>Still stuck after following these steps?</strong> Bring a screenshot of your Events Manager overview and the specific error to Session 6 (Buffer + Catch-Up Week). That's exactly what that session is for.
-    </div>
   </section>
 
 </main>
