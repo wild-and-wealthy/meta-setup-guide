@@ -333,7 +333,6 @@
   <h1>Meta Pixel Setup Guide</h1>
   <p class="subtitle">Install your pixel, set up event tracking in GHL, and verify it's firing — step by step.</p>
   <div class="meta-row">
-    <div class="meta-item"><strong>Platform:</strong> GHL (GoHighLevel) only</div>
     <div class="meta-item"><strong>Time required:</strong> 45–60 minutes</div>
     <div class="meta-item"><strong>Device:</strong> Desktop recommended</div>
   </div>
@@ -368,7 +367,7 @@
       </div>
       <div class="row">
         <div class="key">Lead Event</div>
-        <div class="val">Goes on your masterclass page — fires when someone submits their info. This is what feeds the learning phase.</div>
+        <div class="val">Goes on your webinar room — fires when someone submits their info. This is what feeds the learning phase.</div>
       </div>
       <div class="row">
         <div class="key">InitiateCheckout Event</div>
@@ -474,8 +473,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <li>Save and publish the page</li>
     </ol>
 
-    <span class="step-label">Lead Event — Masterclass Page</span>
-    <p>Paste this on your masterclass page — the page someone lands on after submitting their info:</p>
+    <span class="step-label">Lead Event — Masterclass or Webinar Room</span>
+    <p>Paste this on your masterclass or webinar room — the page someone lands on after submitting their info:</p>
 
 <pre><code>&lt;script&gt;
   fbq('track', 'Lead');
@@ -510,7 +509,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
       <li>Open your funnel landing page in a new Chrome tab</li>
       <li>Click the Pixel Helper icon in your Chrome toolbar (top right)</li>
       <li>You should see a green checkmark with <strong>PageView</strong> — this confirms your base code is firing</li>
-      <li>Navigate to your masterclass page</li>
+      <li>Navigate to your masterclass or webinar room</li>
       <li>Check Pixel Helper again — you should now see both <strong>PageView</strong> and <strong>Lead</strong></li>
       <li>Navigate to your sales/checkout page — you should see <strong>InitiateCheckout</strong> firing</li>
       <li>Navigate to your order confirmation page — you should see <strong>Purchase</strong> firing</li>
@@ -564,11 +563,11 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&amp;ev=PageView&amp;noscript=1
     <div class="checklist">
       <div class="checklist-item"><div class="check"></div><div>Pixel created in Meta Events Manager</div></div>
       <div class="checklist-item"><div class="check"></div><div>Base pixel code installed in GHL funnel header (all pages)</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Lead event code installed on masterclass page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Lead event code installed on masterclass or webinar room</div></div>
       <div class="checklist-item"><div class="check"></div><div>InitiateCheckout event code installed on sales/checkout page</div></div>
       <div class="checklist-item"><div class="check"></div><div>Purchase event code installed on order confirmation page</div></div>
       <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green PageView on landing page</div></div>
-      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green Lead on masterclass page</div></div>
+      <div class="checklist-item"><div class="check"></div><div>Meta Pixel Helper shows green Lead on masterclass or webinar room</div></div>
       <div class="checklist-item"><div class="check"></div><div>Pixel connected to Ad Account in Business Settings</div></div>
     </div>
   </section>
