@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KPI Tracking Guide — Wild &amp; Wealthy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --burgundy: #651D32; --navy: #0A2541; --green: #36482F;
+      --yellow: #F2C75C; --cream: #F5EED7; --text: #0A2541;
+      --muted: #5a6a7a; --border: #e2d9c5; --bg-soft: #F5EED7;
+      --bg-code: #eee8d5; --max-width: 740px;
+    }
+    body { font-family: 'Raleway', sans-serif; font-size: 16px; line-height: 1.7; color: var(--text); background: #fff; padding: 0 24px; }
+    .top-bar { background: var(--navy); margin: 0 -24px; padding: 12px 32px; }
+    .top-bar span { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); }
+    header { max-width: var(--max-width); margin: 0 auto; padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 14px; }
+    header h1 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(32px, 5vw, 48px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; color: var(--navy); margin-bottom: 16px; }
+    header .subtitle { font-size: 18px; font-weight: 300; color: var(--muted); max-width: 560px; }
+    .meta-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+    .meta-item { font-size: 13px; color: var(--muted); }
+    .meta-item strong { color: var(--text); }
+    main { max-width: var(--max-width); margin: 0 auto; }
+    .section { padding: 52px 0 44px; border-bottom: 1px solid var(--border); }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 10px; }
+    .section h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px, 3vw, 30px); font-weight: 900; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+    .section h3 { font-family: 'Fraunces', Georgia, serif; font-size: 20px; font-weight: 700; color: var(--navy); margin: 36px 0 10px; }
+    .section p { margin-bottom: 16px; }
+    .step-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin: 28px 0 8px; }
+    ol.steps { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    ul.bullets { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .callout { background: #fff8e6; border-left: 3px solid var(--yellow); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 20px 0; font-size: 15px; }
+    .callout.tip { background: #f0f7f0; border-left-color: var(--green); }
+    .callout.warning { background: #fdf0f0; border-left-color: var(--burgundy); }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .template-card { border: 2px solid var(--border); border-radius: 10px; padding: 24px; text-decoration: none; color: var(--text); transition: border-color 0.2s; display: block; }
+    .template-card:hover { border-color: var(--burgundy); }
+    .template-card .card-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 8px; }
+    .template-card .card-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .template-card .card-desc { font-size: 13px; color: var(--muted); }
+    .template-card.placeholder { opacity: 0.6; cursor: default; }
+    .template-card.placeholder:hover { border-color: var(--border); }
+    .baseline-item { border: 1px solid var(--border); border-radius: 10px; padding: 28px 28px 24px; margin: 24px 0; }
+    .baseline-number { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .baseline-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .baseline-benchmark { display: inline-block; background: var(--navy); color: #fff; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.04em; }
+    .baseline-benchmark.below { background: var(--burgundy); }
+    .baseline-def { font-size: 15px; margin-bottom: 14px; color: var(--muted); }
+    .baseline-trigger { font-size: 14px; font-weight: 600; color: var(--burgundy); margin-bottom: 10px; }
+    .baseline-fixes { padding-left: 20px; font-size: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .baseline-note { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 10px; }
+    .glossary-item { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .glossary-item:last-child { border-bottom: none; }
+    .glossary-term { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .glossary-def { font-size: 14px; color: var(--text); margin-bottom: 8px; line-height: 1.6; }
+    .glossary-calc { font-size: 13px; color: var(--green); font-weight: 600; background: #f0f7f0; padding: 8px 12px; border-radius: 6px; }
+    footer { max-width: var(--max-width); margin: 48px auto; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    .disclaimer { max-width: var(--max-width); margin: 0 auto; padding: 20px 24px; background: #f9f6ef; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .disclaimer strong { color: var(--text); }
+    @media (max-width: 560px) {
+      .template-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — KPI Tracking Guide</span>
+</div>
+
+<header>
+  <h1>KPI Tracking Guide</h1>
+  <p class="subtitle">What to track, what the numbers mean, and when to act.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Use with:</strong> Your KPI Tracker template</div>
+    <div class="meta-item"><strong>Review:</strong> Daily while ads are running</div>
+    <div class="meta-item"><strong>Applies to:</strong> All ad types</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01: WHAT ARE KPIs -->
+  <section class="section" id="what">
+    <p class="section-label">01 /</p>
+    <h2>What Are KPIs — and Why Do They Matter?</h2>
+
+    <p>KPI stands for <strong>Key Performance Indicator</strong> — a specific, measurable number that tells you how a particular step in your funnel is performing.</p>
+
+    <p>Without KPIs, you're guessing. You might know your ads are running and leads are coming in, but you have no way to know <em>where</em> your funnel is strong, where it's leaking, or what to fix first. KPIs remove the guesswork.</p>
+
+    <p>Every number in your tracker tells a story about one specific stage — from the moment someone sees your ad, to the moment they buy. When a KPI drops below its baseline, you know exactly where the problem is and what to look at.</p>
+
+    <div class="callout tip">
+      <strong>The goal isn't to monitor every number every day.</strong> Your job is to glance at the tracker daily, spot anything below baseline, and know immediately what that means and where to look. That's the whole system.
+    </div>
+
+    <p>There are two types of KPIs in your tracker:</p>
+    <ul class="bullets">
+      <li><strong>Input metrics</strong> — numbers you enter manually (spend, leads, booked calls, closed deals, etc.)</li>
+      <li><strong>Calculated metrics</strong> — percentages and costs that your tracker computes automatically from the inputs (CTR, conversion rates, cost per lead, etc.)</li>
+    </ul>
+    <p>You only need to fill in the input columns. The tracker does the rest.</p>
+  </section>
+
+  <!-- 02: TRACKER TEMPLATES -->
+  <section class="section" id="templates">
+    <p class="section-label">02 /</p>
+    <h2>Your KPI Tracker Templates</h2>
+    <p>There are two versions of the tracker — one for landing page ads and one for DM/instant form ads. Download the one that matches your campaign type and make a copy in your own Google Drive.</p>
+
+    <div class="template-grid">
+      <a href="https://docs.google.com/spreadsheets/d/1ZRcDQhY-oaWb2NwZ7FXrWVjcBanhybavBgRQkBPt1W0/edit?gid=1830728589#gid=1830728589" target="_blank" class="template-card">
+        <div class="card-label">Long Form / Direct to Webinar Ads</div>
+        <div class="card-title">Funnel Tracker — Landing Page</div>
+        <div class="card-desc">For campaigns driving traffic to a landing page or webinar registration. Tracks leads, attendees, saw offer, and back-end sales.</div>
+      </a>
+      <a href="https://docs.google.com/spreadsheets/d/1xpDJRBca1tmZIm79XDI2zzxlVmv1L9lkO324AjVkGHY/edit?gid=1256809022#gid=1256809022" target="_blank" class="template-card">
+        <div class="card-label">Short Form / Send Message + Instant Form Ads</div>
+        <div class="card-title">Funnel Tracker — DM &amp; Instant Form</div>
+        <div class="card-desc">For send message and instant form campaigns. Tracks new DMs, connections, MQLs, pushed to webclass, and back-end sales.</div>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- 03: BASELINE METRICS -->
+  <section class="section" id="baselines">
+    <p class="section-label">03 /</p>
+    <h2>Baseline Metrics — Minimum Performance Standards</h2>
+
+    <p>Baseline metrics are the <strong>minimum acceptable levels</strong> for each key step in your funnel. They are not ideal targets — they are the floor. If any metric falls below its baseline, it signals a specific bottleneck that needs attention.</p>
+
+    <div class="callout tip">
+      <strong>How to use this section:</strong> check your tracker daily. Any number below its baseline is a signal, not a crisis. Use the "what to improve" notes to know exactly where to look.
+    </div>
+
+    <!-- Baseline 1 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 01</div>
+      <div class="baseline-title">CTR (All)</div>
+      <div class="baseline-benchmark">&gt;6% Minimum</div>
+      <p class="baseline-def">The percentage of total impressions that result in any type of click on your ad — including link clicks, profile visits, likes, and shares.</p>
+      <p class="baseline-trigger">If below 6% → the ad creative or hook needs work.</p>
+      <ol class="baseline-fixes">
+        <li>Your verbal hook (the first line you say) isn't compelling enough to stop the scroll</li>
+        <li>The opening visual or scene isn't eye-catching enough to grab attention</li>
+      </ol>
+    </div>
+
+    <!-- Baseline 2 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 02</div>
+      <div class="baseline-title">CTR (Link)</div>
+      <div class="baseline-benchmark">&gt;3% Minimum</div>
+      <p class="baseline-def">The percentage of impressions that result in a link click — someone actually clicking through to your landing page or funnel.</p>
+      <p class="baseline-trigger">If below 3% → the body of your ad or call to action needs work.</p>
+      <ol class="baseline-fixes">
+        <li>Your ad isn't demonstrating enough value to keep the viewer watching through to the CTA</li>
+        <li>Your call to action is weak — either the language or what you're offering in exchange for the click</li>
+      </ol>
+    </div>
+
+    <!-- Baseline 3 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 03</div>
+      <div class="baseline-title">Lead Conversion Rate</div>
+      <div class="baseline-benchmark">&gt;20% Minimum</div>
+      <p class="baseline-def">The percentage of landing page visitors who become leads by opting in, submitting a form, or registering.</p>
+      <p class="baseline-trigger">If below 20% → the landing page messaging, layout, or offer needs work.</p>
+      <ol class="baseline-fixes">
+        <li>The headline isn't making a bold enough promise — visitors don't see enough value to give their information</li>
+        <li>The design, layout, or color scheme is too busy or unclear</li>
+      </ol>
+      <p class="baseline-note">Applies to direct-to-landing-page ads. Not applicable for DM or instant form campaigns.</p>
+    </div>
+
+    <!-- Baseline 4 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 04</div>
+      <div class="baseline-title">Saw Offer Conversion Rate</div>
+      <div class="baseline-benchmark">&gt;20% Minimum</div>
+      <p class="baseline-def">The percentage of people who stayed in the webclass long enough to actually see the sales offer.</p>
+      <p class="baseline-trigger">If below 20% → webinar retention, delivery, or engagement needs work.</p>
+      <ol class="baseline-fixes">
+        <li>If drop-off happens early: your hook or bold promise isn't strong enough to retain attention</li>
+        <li>If drop-off happens mid-section: the content is either boring or not valuable enough</li>
+        <li>If drop-off happens just before the pitch: your transition into the offer is too weak</li>
+      </ol>
+      <p class="baseline-note">Applies to direct-to-landing-page / webinar funnels.</p>
+    </div>
+
+    <!-- Baseline 5 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 05</div>
+      <div class="baseline-title">Front End Sale Conversion Rate</div>
+      <div class="baseline-benchmark">&gt;3% Minimum</div>
+      <p class="baseline-def">The percentage of people who saw the offer and purchased the front-end product.</p>
+      <p class="baseline-trigger">If below 3% → offer clarity, pitch strength, or perceived value needs improvement.</p>
+      <ol class="baseline-fixes">
+        <li>Your offer is too weak — people don't see enough value relative to the price</li>
+        <li>Not enough social proof — people aren't convinced it will work for them</li>
+      </ol>
+    </div>
+
+    <!-- Baseline 6 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 06</div>
+      <div class="baseline-title">Booked Call Rate</div>
+      <div class="baseline-benchmark">&gt;70% Minimum</div>
+      <p class="baseline-def">The percentage of eligible front-end buyers who book a strategy call.</p>
+      <p class="baseline-trigger">If below 70% → your Discovery Process, posture, or urgency needs attention.</p>
+      <ol class="baseline-fixes">
+        <li>Your Discovery Process isn't creating enough perceived value for the call</li>
+        <li>Posture issue — leads feel like they are the prize, not you</li>
+        <li>Not enough urgency — people believe they can book later (they won't)</li>
+      </ol>
+    </div>
+
+    <!-- Baseline 7 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 07</div>
+      <div class="baseline-title">Show Rate</div>
+      <div class="baseline-benchmark">&gt;80% Minimum</div>
+      <p class="baseline-def">The percentage of scheduled calls the prospect actually showed up to.</p>
+      <p class="baseline-trigger">If below 80% → reminder workflows, confirmation messaging, or scheduling friction need work.</p>
+      <ol class="baseline-fixes">
+        <li>Not enough posture around the call — e.g., "If you miss your call, we won't let you rebook"</li>
+        <li>Not enough reminders leading up to the call (email, text, phone call sequence)</li>
+      </ol>
+    </div>
+
+    <!-- Baseline 8 -->
+    <div class="baseline-item">
+      <div class="baseline-number">Baseline 08</div>
+      <div class="baseline-title">Back-End Sale Conversion Rate (Close Rate)</div>
+      <div class="baseline-benchmark">&gt;10% Minimum</div>
+      <p class="baseline-def">The percentage of attended calls that convert into a back-end sale.</p>
+      <p class="baseline-trigger">If below 10% → lead quality, sales process, or objection handling needs improvement.</p>
+      <ol class="baseline-fixes">
+        <li>If you're hearing a lot of "I can't afford it" — you may have a lead quality issue upstream</li>
+        <li>Most likely: a skills gap in the sales conversation itself — discovery, objection handling, or the close</li>
+      </ol>
+    </div>
+
+  </section>
+
+  <!-- 04: GLOSSARY -->
+  <section class="section" id="glossary">
+    <p class="section-label">04 /</p>
+    <h2>Tracking Sheet Glossary + Calculations</h2>
+    <p>Every column in your KPI tracker is defined below, including how it's calculated. Columns marked as <strong>calculated</strong> are filled in automatically by formulas — you only need to enter the raw input numbers.</p>
+
+    <div class="callout">
+      <strong>Input vs. Calculated columns</strong> — Input columns are ones you fill in manually (spend, leads, booked calls, etc.). Calculated columns are generated by your tracker automatically and you should never overwrite them.
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Attended</div>
+      <div class="glossary-def">The number of people who showed up to the booked call, discovery call, or appointment. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Book Call Rate</div>
+      <div class="glossary-def">The percentage of eligible front-end buyers who booked a call. <em>Calculated.</em></div>
+      <div class="glossary-calc">Book Call Rate = Booked Calls ÷ Front End Sales (buyers who entered the Discovery Process)</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Booked Calls</div>
+      <div class="glossary-def">The total number of calls scheduled with prospects. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Clicks (All)</div>
+      <div class="glossary-def">The total number of clicks on the ad — including link clicks, profile visits, likes, shares, and any other interaction. Pulled from Meta Ads Manager. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Close Rate</div>
+      <div class="glossary-def">The percentage of attended calls that resulted in a closed sale. <em>Calculated.</em></div>
+      <div class="glossary-calc">Close Rate = Closed Deals ÷ Attended Calls</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Closed</div>
+      <div class="glossary-def">The total number of back-end deals closed (sales won) during the period. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Commission</div>
+      <div class="glossary-def">The total commission earned from closed deals during the period. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Completed Webclass / Saw Offer</div>
+      <div class="glossary-def">The number of people who stayed in the webclass long enough to see the sales offer. Used interchangeably with "Saw Offer" depending on how your funnel tracks it. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Completes Discovery Process</div>
+      <div class="glossary-def">The number of front-end buyers who completed the full Discovery Process (form, questionnaire, or multi-step qualifier). <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Connection Rate</div>
+      <div class="glossary-def">The percentage of new DMs that turned into a meaningful two-way conversation (a Connection). <em>Calculated.</em></div>
+      <div class="glossary-calc">Connection Rate = Connections ÷ New DMs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Connections</div>
+      <div class="glossary-def">The number of people who responded meaningfully to a DM and progressed into a real conversation — not just a reply, but genuine engagement. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per Acquisition (CPA)</div>
+      <div class="glossary-def">The average ad spend required to generate one front-end sale. <em>Calculated.</em></div>
+      <div class="glossary-calc">CPA = Total Ad Spend ÷ Front End Sales</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per Booked Call</div>
+      <div class="glossary-def">The average ad spend required to generate one booked strategy call. <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per Booked Call = Total Ad Spend ÷ Booked Calls</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per Connection</div>
+      <div class="glossary-def">The average cost to generate one Connection in a DM funnel. <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per Connection = Total Ad Spend ÷ Connections</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per DM</div>
+      <div class="glossary-def">The average ad cost to generate one new direct message conversation. <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per DM = Total Ad Spend ÷ New DMs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per Lead</div>
+      <div class="glossary-def">The average ad cost to generate one lead (opt-in, registration, or survey submission). <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per Lead = Total Ad Spend ÷ Leads</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per MQL</div>
+      <div class="glossary-def">The average ad cost to generate one Marketing Qualified Lead. <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per MQL = Total Ad Spend ÷ MQLs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Cost Per Saw Offer</div>
+      <div class="glossary-def">The average ad cost required to get one person to the point of seeing your offer in the webclass. <em>Calculated.</em></div>
+      <div class="glossary-calc">Cost Per Saw Offer = Total Ad Spend ÷ People Who Saw Offer</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">CPM</div>
+      <div class="glossary-def">Cost per 1,000 impressions. Tells you how expensive it is to reach your audience. Pulled from Meta. <em>Input column.</em></div>
+      <div class="glossary-calc">CPM = Total Ad Spend ÷ (Total Impressions ÷ 1,000)</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">CTR (All)</div>
+      <div class="glossary-def">The percentage of impressions that resulted in any click on your ad — including all interaction types. <em>Calculated.</em></div>
+      <div class="glossary-calc">CTR (All) = Clicks (All) ÷ Impressions</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">CTR (Link)</div>
+      <div class="glossary-def">The percentage of impressions that resulted in someone clicking through to your landing page or funnel. <em>Calculated.</em></div>
+      <div class="glossary-calc">CTR (Link) = Link Clicks ÷ Impressions</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Date</div>
+      <div class="glossary-def">The day, week, or reporting period the data represents. Enter each day as its own row. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Discovery Process Completion Rate</div>
+      <div class="glossary-def">The percentage of front-end buyers who completed the full Discovery Process. <em>Calculated.</em></div>
+      <div class="glossary-calc">Discovery Process Completion Rate = Completes Discovery Process ÷ Front End Sales</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">DM Response Rate</div>
+      <div class="glossary-def">The percentage of new DMs that received a reply from the lead (first reply only). <em>Calculated.</em></div>
+      <div class="glossary-calc">DM Response Rate = DM Responses ÷ New DMs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">DM Responses</div>
+      <div class="glossary-def">The number of people who replied to your DM — counting first replies only, not the full conversation. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Earnings Per Appointment</div>
+      <div class="glossary-def">The average commission earned per attended appointment. This is your core revenue efficiency metric. <em>Calculated.</em></div>
+      <div class="glossary-calc">Earnings Per Appointment = Total Commission ÷ Attended Calls</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Earnings Per Call</div>
+      <div class="glossary-def">The average commission earned per booked call — including no-shows. Useful for understanding the value of every scheduled call. <em>Calculated.</em></div>
+      <div class="glossary-calc">Earnings Per Call = Total Commission ÷ Booked Calls</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Front End Sale</div>
+      <div class="glossary-def">The total number of front-end purchases made through your funnel during the period (e.g., Genesis purchases). <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Front End Sale Conv Rate</div>
+      <div class="glossary-def">The percentage of leads (or people who saw the offer) who made a front-end purchase. <em>Calculated.</em></div>
+      <div class="glossary-calc">Front End Sale Conv Rate = Front End Sales ÷ Leads</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Impressions</div>
+      <div class="glossary-def">The total number of times your ad was shown on screen. Counts every display — the same person seeing it multiple times counts multiple times. Pulled from Meta. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Lead Conv Rate</div>
+      <div class="glossary-def">The percentage of landing page visitors who became a lead. <em>Calculated.</em></div>
+      <div class="glossary-calc">Lead Conv Rate = Leads ÷ Page Visits (or unique link clicks, depending on your funnel)</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Leads</div>
+      <div class="glossary-def">The number of people who submitted their information and became a lead — opt-in, survey submission, or webclass registration. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Marketing Qualified Leads (MQLs)</div>
+      <div class="glossary-def">Leads who passed your qualification criteria — fit, interest, readiness to buy. Higher quality than a raw opt-in. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">MQL Rate</div>
+      <div class="glossary-def">The percentage of new DMs that became Marketing Qualified Leads. <em>Calculated.</em></div>
+      <div class="glossary-calc">MQL Rate = MQLs ÷ New DMs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">My Response Rate</div>
+      <div class="glossary-def">The percentage of inbound DMs that your team responded to. Measures how consistently you're following up with leads. <em>Calculated.</em></div>
+      <div class="glossary-calc">My Response Rate = DM Responses ÷ New DMs</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">New DMs</div>
+      <div class="glossary-def">The total number of new direct message conversations started as a result of your ads. Counts first messages only — not replies or follow-ups. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Package</div>
+      <div class="glossary-def">The dollar value of the offer or package the customer purchased (e.g., $1,995 or $7,800). Used to calculate commission. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Pushed to Webclass</div>
+      <div class="glossary-def">The number of people moved into the webclass portion of the funnel — whether via DM handoff, survey redirect, or manual outreach. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Saw Offer</div>
+      <div class="glossary-def">The number of people who reached the point in the webclass where your sales offer was presented. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Saw Offer Conv Rate</div>
+      <div class="glossary-def">The percentage of people who made it far enough to see the offer. <em>Calculated.</em></div>
+      <div class="glossary-calc">Saw Offer Conv Rate = Saw Offer ÷ Pushed to Webclass (or total attendees, depending on your funnel)</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Show Rate</div>
+      <div class="glossary-def">The percentage of booked calls that the prospect actually showed up to. <em>Calculated.</em></div>
+      <div class="glossary-calc">Show Rate = Attended ÷ Booked Calls</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Spend</div>
+      <div class="glossary-def">The total amount of advertising dollars spent during the reporting period. Pulled from Meta Ads Manager. <em>Input column.</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Survey Conv Rate</div>
+      <div class="glossary-def">The percentage of survey page visitors who completed and submitted the survey. <em>Calculated.</em></div>
+      <div class="glossary-calc">Survey Conv Rate = Survey Submissions ÷ Survey Page Visits</div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Survey Page Visits</div>
+      <div class="glossary-def">The number of people who landed on your survey page. <em>Input column (from GHL).</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Survey Submissions</div>
+      <div class="glossary-def">The number of surveys completed and submitted. <em>Input column (from GHL).</em></div>
+    </div>
+
+    <div class="glossary-item">
+      <div class="glossary-term">Unique Link Clicks</div>
+      <div class="glossary-def">The number of individual people who clicked your ad's link at least once. Removes duplicate clicks from the same person. Pulled from Meta. <em>Input column.</em></div>
+    </div>
+
+  </section>
+
+</main>
+
+<div class="disclaimer">
+  <strong>Confidential — For The W&amp;W Legacy Platform Members Only.</strong> This document was created exclusively for the W&amp;W Community. All materials contained within are proprietary and intended for personal use only. Sharing, redistribution, reproduction, or reuse of this material (in part or in full) external to this platform without written permission is strictly prohibited.
+</div>
+<footer>
+  <p>Wild &amp; Wealthy — KPI Tracking Guide &nbsp;·&nbsp; Reference this alongside your KPI tracker</p>
+</footer>
+
+</body>
+</html>
