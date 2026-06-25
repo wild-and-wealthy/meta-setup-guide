@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTM Tracking Setup Guide — Wild &amp; Wealthy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --burgundy: #651D32; --navy: #0A2541; --green: #36482F;
+      --yellow: #F2C75C; --cream: #F5EED7; --text: #0A2541;
+      --muted: #5a6a7a; --border: #e2d9c5; --bg-soft: #F5EED7;
+      --bg-code: #eee8d5; --max-width: 740px;
+    }
+    body { font-family: 'Raleway', sans-serif; font-size: 16px; line-height: 1.7; color: var(--text); background: #fff; padding: 0 24px; }
+    .top-bar { background: var(--navy); margin: 0 -24px; padding: 12px 32px; }
+    .top-bar span { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); }
+    header { max-width: var(--max-width); margin: 0 auto; padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 14px; }
+    header h1 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(32px, 5vw, 48px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; color: var(--navy); margin-bottom: 16px; }
+    header .subtitle { font-size: 18px; font-weight: 300; color: var(--muted); max-width: 560px; }
+    .meta-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+    .meta-item { font-size: 13px; color: var(--muted); }
+    .meta-item strong { color: var(--text); }
+    .warning-banner { max-width: var(--max-width); margin: 28px auto 0; background: #fdf0f0; border: 1px solid #e8c5c5; border-radius: 8px; padding: 20px 24px; }
+    .warning-banner strong { color: var(--burgundy); display: block; margin-bottom: 6px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+    main { max-width: var(--max-width); margin: 0 auto; }
+    .section { padding: 52px 0 44px; border-bottom: 1px solid var(--border); }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 10px; }
+    .section h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px, 3vw, 30px); font-weight: 900; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+    .section p { margin-bottom: 16px; }
+    .step-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin: 28px 0 8px; }
+    ol.steps { padding-left: 20px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .callout { background: #fff8e6; border-left: 3px solid var(--yellow); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 20px 0; font-size: 15px; }
+    .callout.tip { background: #f0f7f0; border-left-color: var(--green); }
+    .callout.warning { background: #fdf0f0; border-left-color: var(--burgundy); }
+    pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 12px 0 16px; white-space: pre-wrap; word-break: break-all; }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; background: var(--bg-code); padding: 2px 6px; border-radius: 4px; }
+    .prop-table { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 16px 0; font-size: 14px; }
+    .prop-table .row { display: grid; grid-template-columns: 160px 1fr; border-bottom: 1px solid var(--border); }
+    .prop-table .row:last-child { border-bottom: none; }
+    .prop-table .key { background: var(--bg-soft); padding: 10px 14px; font-weight: 600; border-right: 1px solid var(--border); font-size: 13px; }
+    .prop-table .val { padding: 10px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; word-break: break-all; }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .compare-card { padding: 20px; border-radius: 8px; }
+    .compare-card.without { background: #fdf0f0; border: 1px solid #e8c5c5; }
+    .compare-card.with { background: #f0f7f0; border: 1px solid #c3dfc3; }
+    .compare-card h4 { font-weight: 700; margin-bottom: 10px; font-size: 14px; }
+    .compare-card.without h4 { color: var(--burgundy); }
+    .compare-card.with h4 { color: var(--green); }
+    .compare-card p { font-size: 14px; margin: 0; }
+    footer { max-width: var(--max-width); margin: 48px auto; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    .disclaimer { max-width: var(--max-width); margin: 0 auto; padding: 20px 24px; background: #f9f6ef; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .disclaimer strong { color: var(--text); }
+    @media (max-width: 500px) {
+      .compare { grid-template-columns: 1fr; }
+      .prop-table .row { grid-template-columns: 1fr; }
+      .prop-table .key { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — UTM Tracking Guide</span>
+</div>
+
+<header>
+  <h1>UTM Tracking Setup Guide</h1>
+  <p class="subtitle">See exactly which campaign, ad set, and ad is driving your leads — directly inside GHL.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Platform:</strong> GHL (GoHighLevel) only</div>
+    <div class="meta-item"><strong>Ad type:</strong> Landing page ads only</div>
+    <div class="meta-item"><strong>Time required:</strong> 10 minutes</div>
+    <div class="meta-item"><strong>When to set up:</strong> After your campaign is live</div>
+  </div>
+</header>
+
+<div class="warning-banner">
+  <strong>⚠ GHL users only</strong>
+  These instructions are specific to GoHighLevel. If you are using a different funnel platform, this guide does not apply to your setup. This also applies to landing page ads only — send message ads and instant form ads do not use URL parameters in the same way.
+</div>
+
+<main>
+
+  <section class="section" id="what">
+    <p class="section-label">01 /</p>
+    <h2>What UTM Tracking Does</h2>
+    <p>UTM codes are short tags you add to your ad's destination URL. When someone clicks your ad and opts in, those tags pass through to GHL and get attached to the contact's record — so you can see exactly which ad brought them in.</p>
+
+    <div class="compare">
+      <div class="compare-card without">
+        <h4>Without UTMs</h4>
+        <p>You know leads are coming in. You don't know which of your 15 ads is responsible. Meta's attribution data is approximate at best.</p>
+      </div>
+      <div class="compare-card with">
+        <h4>With UTMs</h4>
+        <p>Every contact in GHL shows which campaign, ad set, and ad brought them in. You can see at a glance which creative is working.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Focus on campaign name + ad name.</strong> In Phase 1, you're running one campaign and one ad set — so those are redundant. The ad name is what tells you which of your 15 hooks drove each lead.
+    </div>
+  </section>
+
+  <section class="section" id="step1">
+    <p class="section-label">02 /</p>
+    <h2>Step 1 — Add the URL Parameter in Meta</h2>
+    <p>This is added at the ad level inside Meta Ads Manager — not on your funnel or in GHL.</p>
+
+    <span class="step-label">Where to find it</span>
+    <p>Meta Ads Manager → your campaign → Ad level → scroll to <strong>Destination</strong> → expand <strong>URL Parameters</strong></p>
+
+    <span class="step-label">Paste this exactly</span>
+    <p>Do not change anything in this string. Meta fills in the dynamic values automatically for each individual ad:</p>
+
+<pre>utm_source=facebook&utm_medium={{adset.name}}&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&campaign_id={{campaign.id}}</pre>
+
+    <div class="callout">
+      <strong>The double curly braces are intentional.</strong> <code>{{campaign.name}}</code>, <code>{{adset.name}}</code>, and <code>{{ad.name}}</code> are Meta dynamic parameters — Meta replaces them automatically with the real values when the ad runs. Do not replace them manually.
+    </div>
+  </section>
+
+  <section class="section" id="step2">
+    <p class="section-label">03 /</p>
+    <h2>Step 2 — Map the Values in GHL</h2>
+    <p>Once the URL parameters are in place, GHL needs to know where to store that data when a lead comes in. You do this by mapping the UTM values to fields in your lead sheet or contact view.</p>
+
+    <span class="step-label">Add these field mappings in GHL</span>
+    <p>In your GHL lead form, automation, or contact view, add these three fields:</p>
+
+    <div class="prop-table">
+      <div class="row">
+        <div class="key">Campaign Name</div>
+        <div class="val">{{contact.attributionSource.utmCampaign}}</div>
+      </div>
+      <div class="row">
+        <div class="key">Ad Set Name</div>
+        <div class="val">{{contact.attributionSource.utmMedium}}</div>
+      </div>
+      <div class="row">
+        <div class="key">Ad Name</div>
+        <div class="val">{{contact.attributionSource.utmContent}}</div>
+      </div>
+    </div>
+
+    <p>These can be added as columns to any existing lead tracking worksheet or contact view inside GHL.</p>
+
+    <div class="callout tip">
+      <strong>In Phase 1, ad name is your most valuable field.</strong> Since you're running all ads in one campaign and one ad set, the campaign name and ad set name will be identical for every lead. The ad name is what differentiates — it tells you which hook brought each person in.
+    </div>
+  </section>
+
+  <section class="section" id="caveats">
+    <p class="section-label">04 /</p>
+    <h2>What to Know Before You Read the Data</h2>
+
+    <span class="step-label">GHL captures first attribution</span>
+    <p>GHL records where a lead came from the <em>first time</em> they entered your funnel. If the same person clicks a different ad three months later and opts in again, GHL will still show the original source — not the most recent one.</p>
+    <p>This is called first-touch attribution. It's not a bug — it's just how GHL works. Keep it in mind when reading your contact records, especially for leads who may have been in your funnel before.</p>
+
+    <span class="step-label">Send message ads — does not apply</span>
+    <p>Send message ads open a Messenger conversation — there is no destination URL, so UTM parameters don't apply. These leads are not trackable via UTMs.</p>
+
+    <span class="step-label">Instant form ads — does not apply</span>
+    <p>Instant form ads load entirely within Facebook — the lead never visits your funnel URL. UTM tracking does not apply to instant form ads.</p>
+  </section>
+
+  <section class="section" id="timing">
+    <p class="section-label">05 /</p>
+    <h2>When to Set This Up</h2>
+    <p>UTM tracking is not required to launch your ads. Your priority in Session 5 is getting your campaign live. UTMs are a layer on top that makes your data more readable inside GHL.</p>
+    <p><strong>Recommended timing:</strong> Set up UTMs when you're inside Meta building your campaign, before you publish. It takes 10 minutes and you only have to do it once per campaign.</p>
+    <p>If you've already launched without UTMs, you can add them to existing ads — just be aware that data won't be retroactive for leads who came in before the parameters were added.</p>
+  </section>
+
+</main>
+
+<div class="disclaimer">
+  <strong>Confidential — For The W&amp;W Legacy Platform Members Only.</strong> This document was created exclusively for the W&amp;W Community. All materials contained within are proprietary and intended for personal use only. Sharing, redistribution, reproduction, or reuse of this material (in part or in full) external to this platform without written permission is strictly prohibited.
+</div>
+<footer>
+  <p>Wild &amp; Wealthy — UTM Tracking Guide &nbsp;·&nbsp; GHL + landing page ads only</p>
+</footer>
+
+</body>
+</html>

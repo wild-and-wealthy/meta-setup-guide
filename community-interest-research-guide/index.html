@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interest Research Guide — Wild &amp; Wealthy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --burgundy: #651D32; --navy: #0A2541; --green: #36482F;
+      --yellow: #F2C75C; --cream: #F5EED7; --text: #0A2541;
+      --muted: #5a6a7a; --border: #e2d9c5; --bg-soft: #F5EED7;
+      --bg-code: #eee8d5; --max-width: 740px;
+    }
+    body { font-family: 'Raleway', sans-serif; font-size: 16px; line-height: 1.7; color: var(--text); background: #fff; padding: 0 24px; }
+    .top-bar { background: var(--navy); margin: 0 -24px; padding: 12px 32px; }
+    .top-bar span { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--yellow); }
+    header { max-width: var(--max-width); margin: 0 auto; padding: 56px 0 44px; border-bottom: 1px solid var(--border); }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 14px; }
+    header h1 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(32px, 5vw, 48px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.15; color: var(--navy); margin-bottom: 16px; }
+    header .subtitle { font-size: 18px; font-weight: 300; color: var(--muted); max-width: 560px; }
+    .meta-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+    .meta-item { font-size: 13px; color: var(--muted); }
+    .meta-item strong { color: var(--text); }
+    main { max-width: var(--max-width); margin: 0 auto; }
+    .section { padding: 52px 0 44px; border-bottom: 1px solid var(--border); }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 10px; }
+    .section h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px, 3vw, 30px); font-weight: 900; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+    .section p { margin-bottom: 16px; }
+    .step-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin: 28px 0 8px; }
+    .callout { background: #fff8e6; border-left: 3px solid var(--yellow); border-radius: 0 6px 6px 0; padding: 16px 20px; margin: 20px 0; font-size: 15px; }
+    .callout.tip { background: #f0f7f0; border-left-color: var(--green); }
+    .callout.warning { background: #fdf0f0; border-left-color: var(--burgundy); }
+    pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 6px; padding: 16px 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 12px 0 16px; white-space: pre-wrap; }
+    .cat-cards { display: flex; flex-direction: column; gap: 16px; margin: 20px 0; }
+    .cat-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: 22px 24px; display: grid; grid-template-columns: 160px 1fr; gap: 0 24px; align-items: start; }
+    .cat-card .cat-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--burgundy); display: block; margin-bottom: 4px; }
+    .cat-card h4 { font-family: 'Fraunces', Georgia, serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .cat-card .cat-note { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .cat-card ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+    .cat-card ul li { font-size: 13px; background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; color: var(--text); }
+    .avoid-group { margin: 0 0 24px; }
+    .avoid-group h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--burgundy); margin-bottom: 10px; }
+    .avoid-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .avoid-list li { display: flex; gap: 12px; padding: 11px 16px; background: #fdf0f0; border-radius: 6px; font-size: 14px; border-left: 3px solid var(--burgundy); }
+    .avoid-list li::before { content: "✕"; color: var(--burgundy); font-weight: 700; flex-shrink: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0; }
+    th { background: var(--bg-soft); text-align: left; padding: 10px 14px; font-weight: 700; border-bottom: 2px solid var(--border); }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .phase-steps { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+    .phase-step { display: flex; gap: 16px; padding: 16px; background: var(--bg-soft); border-radius: 8px; }
+    .phase-step .num { width: 28px; height: 28px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .phase-step .content { font-size: 15px; }
+    .phase-step .content strong { display: block; margin-bottom: 4px; }
+    footer { max-width: var(--max-width); margin: 48px auto; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    .disclaimer { max-width: var(--max-width); margin: 0 auto 0; padding: 20px 24px; background: #f9f6ef; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .disclaimer strong { color: var(--text); }
+    @media (max-width: 520px) {
+      .cat-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Wild &amp; Wealthy — Interest Research Guide</span>
+</div>
+
+<header>
+  <h1>Interest Research Guide</h1>
+  <p class="subtitle">How to choose your audience interests, what to avoid, and how to research them before you launch.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>When to use:</strong> Before launching your Phase 1 campaign</div>
+    <div class="meta-item"><strong>Time required:</strong> 15–20 minutes</div>
+  </div>
+</header>
+
+<main>
+
+  <section class="section" id="andromeda">
+    <p class="section-label">01 /</p>
+    <h2>The Rule: Advantage+ Stays On</h2>
+    <p>With Meta's Andromeda update fully rolled out, the algorithm now decides who sees your ad based largely on the content of your creative. Interests have become <em>suggestions</em> — not restrictions.</p>
+    <p>This means one thing: <strong>Advantage+ Detailed Targeting stays on, always.</strong> You are not locking Meta into a narrow audience. You are giving it a starting direction and letting it find the right people from there.</p>
+
+    <div class="callout tip">
+      <strong>The setup:</strong> Advantage+ ON + 1–2 interests as seeds. Pick from the categories below. Don't overthink it — your creative is doing the targeting work.
+    </div>
+
+    <p>The interests you add act as a nudge — Meta uses them to calibrate early delivery, then expands as it learns who is converting. The better your creative, the less the interests matter.</p>
+  </section>
+
+  <section class="section" id="categories">
+    <p class="section-label">02 /</p>
+    <h2>Three Categories of Interests</h2>
+    <p>Every interest falls into one of three buckets. You don't need one from each — pick 1–2 that feel most aligned with your angle.</p>
+
+    <div class="cat-cards">
+      <div class="cat-card">
+        <div>
+          <span class="cat-label">Category 1</span>
+          <h4>Identity</h4>
+          <p class="cat-note">Who they see themselves as. These people have already claimed the identity — strong signal of the right person.</p>
+        </div>
+        <ul>
+          <li>Entrepreneurship</li>
+          <li>Online business</li>
+          <li>Small business owner</li>
+          <li>Work from home</li>
+          <li>Affiliate marketing</li>
+          <li>Digital marketing</li>
+        </ul>
+      </div>
+
+      <div class="cat-card">
+        <div>
+          <span class="cat-label">Category 2</span>
+          <h4>Desire</h4>
+          <p class="cat-note">What they're actively seeking. Signals intent — they're already looking for a way out or a way forward.</p>
+        </div>
+        <ul>
+          <li>Financial independence</li>
+          <li>Work from home</li>
+          <li>Time freedom</li>
+          <li>Flexible work</li>
+          <li>Personal development</li>
+          <li>Wealth building</li>
+        </ul>
+      </div>
+
+      <div class="cat-card">
+        <div>
+          <span class="cat-label">Category 3</span>
+          <h4>Behaviors</h4>
+          <p class="cat-note">Actions Meta tracks — what people actually do, not just what they say they're interested in. Found under <strong>Browse → Behaviors</strong> in Detailed Targeting, separate from the Interests search.</p>
+        </div>
+        <ul>
+          <li>Small business owners</li>
+          <li>Engaged shoppers</li>
+          <li>Online buyers</li>
+          <li>High-value buyers</li>
+          <li>Business travelers</li>
+          <li>Early technology adopters</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="avoid">
+    <p class="section-label">03 /</p>
+    <h2>What to Avoid</h2>
+    <p>These interests attract the wrong type of person, inflate your cost without improving lead quality, or pull in people in browsing mode — not buying mode.</p>
+
+    <div class="avoid-group">
+      <h4>Low buyer intent</h4>
+      <ul class="avoid-list">
+        <li><strong>Side hustle</strong> — attracts people looking for extra $20/hour, not a business investment.</li>
+        <li><strong>Passive income</strong> — get-rich-quick browsers. Low conversion on education and training offers.</li>
+        <li><strong>Work-life balance</strong> — inspiration-seekers, not action-takers. Very low buyer intent despite sounding perfect.</li>
+        <li><strong>Career change</strong> — these people want a new job, not a business.</li>
+        <li><strong>Freelancing</strong> — trading time for money differently, not building leverage. Wrong model.</li>
+        <li><strong>Digital nomad</strong> — primarily dreamers. Aspirational but unlikely to invest.</li>
+      </ul>
+    </div>
+
+    <div class="avoid-group">
+      <h4>Content consumers, not buyers</h4>
+      <ul class="avoid-list">
+        <li><strong>Self-improvement / Motivation / Mindfulness</strong> — people consuming content, not looking for an offer to invest in.</li>
+        <li><strong>Entrepreneur Magazine / Forbes / Business Insider</strong> — readers, not investors.</li>
+        <li><strong>Oprah Winfrey / Rachel Hollis</strong> — too broad or too fragmented to give a useful buyer signal.</li>
+      </ul>
+    </div>
+
+    <div class="avoid-group">
+      <h4>Wrong model or burned audience</h4>
+      <ul class="avoid-list">
+        <li><strong>Network marketing / Multi-level marketing</strong> — attracts people already in competing companies or burned out on the industry entirely.</li>
+        <li><strong>Female empowerment</strong> — enormous audience with no business intent. Inflates cost with weak lead quality.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Always confirm an interest exists in Meta before using it.</strong> Some that sound right have been quietly removed. Search in Detailed Targeting — if it doesn't appear, it's gone. Move on. ClickFunnels, for example, is not a targetable Meta interest.
+    </div>
+  </section>
+
+  <section class="section" id="research">
+    <p class="section-label">04 /</p>
+    <h2>How to Research Interests in Meta Ads Manager</h2>
+    <p>Not every interest you think of will exist as a targetable option in Meta. Always verify before using.</p>
+
+    <span class="step-label">Step 1 — Navigate to Ad Set Level</span>
+    <p>Open Meta Ads Manager → Create or Edit Campaign → go to the <strong>Ad Set</strong> level → scroll to <strong>Detailed Targeting</strong>.</p>
+
+    <span class="step-label">Step 2 — Search Your Keywords</span>
+    <p>Click into the search bar and type a name or keyword. Meta will show matching interests. If an exact name doesn't appear, look at what Meta suggests instead — the broader category it returns is still usable.</p>
+
+    <span class="step-label">Step 3 — Browse Suggestions</span>
+    <p>After selecting an interest, click <strong>Suggestions</strong> — Meta will recommend related interests based on what you've already chosen. This is often where the best options show up.</p>
+
+    <span class="step-label">Finding Behaviors</span>
+    <p>Behaviors are in a separate section from Interests. In Detailed Targeting, click <strong>Browse</strong> → <strong>Behaviors</strong>. You won't find them via the keyword search bar — you have to navigate there manually.</p>
+  </section>
+
+  <section class="section" id="ai">
+    <p class="section-label">05 /</p>
+    <h2>AI Prompt for Interest Research</h2>
+    <p>Use any AI tool to brainstorm a starting list, then verify each one inside Ads Manager before using it.</p>
+    <p>The example below is written for this specific business model and ICA. <strong>Before you use it, rewrite the first paragraph in your own words</strong> — describe your offer, who you help, and what your ads are promoting. The more specific your context, the better the output.</p>
+
+<pre>"I run a high-ticket affiliate marketing business promoting a lucrative online business opportunity with a network marketing component. My ads drive traffic to a masterclass that teaches people how to build online income and develop high-profit, location-independent skills. My audience is entrepreneurially-minded, wants to earn from anywhere, and is open to affiliate or network marketing — but skeptical of traditional MLM.
+
+Give me 20 Meta targeting ideas across three categories:
+1. Identity interests — what they identify with or are already calling themselves (entrepreneurship, online business, affiliate marketing, digital marketing, work from home)
+2. Desire interests — what they're actively seeking (financial independence, time freedom, flexible work, wealth building)
+3. Behaviors — what they actually do in Meta (small business owners, engaged shoppers, high-value buyers, business travelers, early technology adopters)
+
+Format as a simple list under each category."</pre>
+
+    <p>Take the output into Meta Ads Manager and search each suggestion. Confirm it exists before using it. If Meta returns a broader category instead of the exact name, that's still valid.</p>
+  </section>
+
+  <section class="section" id="quickref">
+    <p class="section-label">06 /</p>
+    <h2>Recommended Starting Pairings</h2>
+    <p>Each row is a suggested pairing — one Behavior + one Identity or Desire interest — added together in your ad set. Pick what fits your ad angle best.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Behavior</th>
+          <th>Identity / Desire Interest</th>
+          <th>Angle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Small business owners</td><td>Financial independence</td><td>Already in business, wants more freedom</td></tr>
+        <tr><td>Engaged shoppers</td><td>Online business</td><td>High purchase intent + business mindset</td></tr>
+        <tr><td>Small business owners</td><td>Entrepreneurship</td><td>Double business-builder signal</td></tr>
+        <tr><td>Business travelers</td><td>Work from home</td><td>Freedom-seekers, wants flexibility</td></tr>
+        <tr><td>Engaged shoppers</td><td>Financial independence</td><td>Buyer behavior + income desire</td></tr>
+        <tr><td>Early technology adopters</td><td>Online business</td><td>Forward-thinkers open to new models</td></tr>
+        <tr><td>High-value buyers</td><td>Wealth building</td><td>Already invests money — high-ticket signal</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="phase1">
+    <p class="section-label">07 /</p>
+    <h2>Phase 1: Set It and Forget It</h2>
+    <p>In Phase 1, you are not testing which interests work best — you are testing which <strong>hooks</strong> work best. The goal is to find your winning creative. The interests are just giving Meta a head start.</p>
+
+    <div class="phase-steps">
+      <div class="phase-step">
+        <div class="num">1</div>
+        <div class="content"><strong>Keep Advantage+ on</strong> Non-negotiable. You are giving Meta a starting direction, not restricting who it can reach.</div>
+      </div>
+      <div class="phase-step">
+        <div class="num">2</div>
+        <div class="content"><strong>Add 1–2 interests or behaviors from the categories above</strong> One Behavior + one Identity or Desire interest is a strong starting combination. Pick the pairing that best matches the angle of your ad creative.</div>
+      </div>
+      <div class="phase-step">
+        <div class="num">3</div>
+        <div class="content"><strong>Leave it alone</strong> Once your ad set is live, don't touch the targeting. The learning phase needs time and data. Changing targeting mid-flight resets the algorithm's progress. Set it, watch your creative performance, and let it run.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Your ad is your targeting.</strong> When the hook and message are right, Meta will find the right person. Phase 1 is about finding that hook. Keep the targeting simple and focus your energy on creative.
+    </div>
+  </section>
+
+</main>
+
+<div class="disclaimer">
+  <strong>Confidential — For The W&amp;W Legacy Platform Members Only.</strong> This document was created exclusively for the W&amp;W Community. All materials contained within are proprietary and intended for personal use only. Sharing, redistribution, reproduction, or reuse of this material (in part or in full) external to this platform without written permission is strictly prohibited.
+</div>
+<footer>
+  <p>Wild &amp; Wealthy — Interest Research Guide</p>
+</footer>
+
+</body>
+</html>
